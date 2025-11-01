@@ -15,7 +15,7 @@
 
 - пользователи - users: id / login / password / registered_at / role_id
 - роли - roles: id / name
-- статьи - posts: id / title / image_url / content / published_at
+- статьи - posts: id / title / image_url (https://picsum.photos/280/150) / content / published_at
 - комментарии - comments id / author_id / post_id / content
 
 Схема состояния на BFF:
