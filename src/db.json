@@ -11,7 +11,7 @@
   "roles": [
     {
       "id": 0,
-      "name": "Administrator"
+      "name": "Admin"
     },
 	{
 	  "id": 1,
