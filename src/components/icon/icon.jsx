@@ -9,5 +9,7 @@ const IconContainer = ({ className, id, ...rest }) => (
 export const Icon = styled(IconContainer)`
 	font-size: ${({ size }) => size};
 	margin: ${({ margin }) => margin};
+	align-items: center;
+	justify-content: center;
 	cursor: pointer;
 `;

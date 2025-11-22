@@ -1,7 +1,7 @@
 import { removeComment } from './session';
 import { ROLE } from '../constants';
 
-export const createSession = (roleId) => {
+export const createSession = (role_id) => {
 	const session = {
 		logout() {
 			Object.keys(session).forEach((key) => {
@@ -10,7 +10,7 @@ export const createSession = (roleId) => {
 		},
 	};
 
-	switch (roleId) {
+	switch (role_id) {
 		case ROLE.ADMIN:
 			session.removeComment = removeComment;
 			break;
