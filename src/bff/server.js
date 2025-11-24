@@ -29,21 +29,20 @@ export const server = {
 		};
 	},
 
-	async regicter(regLogin, regPassword) {
-		const user = await getUser(regLogin);
-		if (user) {
+	async register(regLogin, regPassword) {
+		const existingUser = await getUser(regLogin);
+		if (existingUser) {
 			return { error: 'This login is already taken', res: null };
 		}
 
-		await createUser(regLogin, regPassword);
+		const newUser = await createUser(regLogin, regPassword);
+		const { password, ...safeUser } = newUser;
 
 		return {
 			error: null,
 			res: {
-				id: user.id,
-				login: user.login,
-				role_id: user.role_id,
-				session: sessions.create(user),
+				...safeUser,
+				session: sessions.create(safeUser),
 			},
 		};
 	},
