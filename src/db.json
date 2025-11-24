@@ -6,25 +6,53 @@
       "password": "qwerty123",
       "role_id": 0,
       "registered_at": "2026-01-15"
+    },
+    {
+      "id": "e72b",
+      "login": "ivan",
+      "password": "qwert123",
+      "registered_at": "2033-12-21 20:53",
+      "role_id": 2
+    },
+    {
+      "id": "0533",
+      "login": "ivan2",
+      "password": "qwerty123",
+      "registered_at": "2042-02-27 11:20",
+      "role_id": 2
+    },
+    {
+      "id": "68a6",
+      "login": "boris",
+      "password": "qwerty123",
+      "registered_at": "2055-03-21 21:34",
+      "role_id": 2
+    },
+    {
+      "id": "3ff5",
+      "login": "111",
+      "password": "111111",
+      "registered_at": "2061-12-20 01:49",
+      "role_id": 2
     }
   ],
   "roles": [
     {
-      "id": 0,
+      "id": "0",
       "name": "Admin"
     },
-	{
-	  "id": 1,
-	  "name": "Moderator"
-	},
-	{
-	  "id": 2,
-	  "name": "Reader"
-	},
-	{
-	  "id": 3,
-	  "name": "Guest"
-	}
+    {
+      "id": "1",
+      "name": "Moderator"
+    },
+    {
+      "id": "2",
+      "name": "Reader"
+    },
+    {
+      "id": "3",
+      "name": "Guest"
+    }
   ],
   "posts": [
     {
