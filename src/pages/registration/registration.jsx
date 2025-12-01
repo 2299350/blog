@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { server } from '../../bff';
 import { Input, Button, H2, AuthFormError } from '../../components';
 import { useResetForm } from '../../hooks';
+import { saveUserToStorage } from '../../utils';
 import { useNavigate } from 'react-router-dom';
 import { ROLE } from '../../constants';
 import styled from 'styled-components';
@@ -63,6 +64,7 @@ const RegistrationContainer = ({ className }) => {
 				return;
 			}
 			dispatch(setUser(res));
+			saveUserToStorage(res);
 		});
 	};
 

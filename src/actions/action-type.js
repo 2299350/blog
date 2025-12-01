@@ -1,4 +1,5 @@
 export const ACTION_TYPE = {
 	SET_USER: 'SET_USER',
 	LOGOUT: 'LOGOUT',
+	GET_USERS: 'GET_USERS',
 };
