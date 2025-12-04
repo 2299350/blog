@@ -1,12 +1,12 @@
 {
   "users": [
-	{
-  	  "id": "e72dd",
-  	  "login": "admin",
-  	  "password": "qwerty123",
-  	  "role_id": 1,
-	  "registered_at": "2026-01-15"
-	},
+    {
+      "id": "e72dd",
+      "login": "admin",
+      "password": "qwerty123",
+      "role_id": 1,
+      "registered_at": "2026-01-15"
+    },
     {
       "id": "001",
       "login": "anton",

@@ -1,11 +1,24 @@
+import { useState } from 'react';
 import { Icon } from '../../../../components';
 import { TableRow } from '../table-row/table-row';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-const UserRowContainer = ({ className, login, registered_at, role_id, roles }) => {
-	const dispatch = useDispatch();
-	const onRoleChange = () => {};
+const UserRowContainer = ({
+	className,
+	id,
+	login,
+	registered_at,
+	role_id,
+	roles,
+	onRoleSave,
+}) => {
+	const [currentRoleId, setCurrentRoleId] = useState(role_id);
+
+	const onRoleChange = ({ target }) => {
+		setCurrentRoleId(Number(target.value));
+	};
+
+	const isSaveDisabled = currentRoleId === role_id;
 
 	return (
 		<div className={className}>
@@ -15,24 +28,37 @@ const UserRowContainer = ({ className, login, registered_at, role_id, roles }) =
 					<div className="registered_at-column">{registered_at}</div>
 
 					<div className="role_id-column">
-						<select name="role_id" value={role_id} onChange={onRoleChange}>
+						<select
+							name="role_id"
+							value={currentRoleId}
+							onChange={onRoleChange}
+						>
 							{roles.map(({ id: roleId, name: roleName }) => (
 								<option key={roleId} value={roleId}>
 									{roleName}
 								</option>
 							))}
 						</select>
+
 						<Icon
 							id="fa-floppy-o"
 							margin="0 0 0 10px"
-							onClick={() => dispatch(/* TODO */)}
+							disabled={isSaveDisabled}
+							className={isSaveDisabled ? 'icon-disabled' : ''}
+							onClick={() => {
+								if (isSaveDisabled) return;
+
+								onRoleSave(id, currentRoleId);
+							}}
 						/>
 					</div>
 
 					<Icon
 						id="fa-trash-o"
 						margin="0 0 0 10px"
-						onClick={() => dispatch(/* TODO */)}
+						onClick={() => {
+							/* TODO */
+						}}
 					/>
 				</div>
 			</TableRow>
@@ -41,6 +67,9 @@ const UserRowContainer = ({ className, login, registered_at, role_id, roles }) =
 };
 
 export const UserRow = styled(UserRowContainer)`
+	border: 1px solid #000;
+	padding: 8px 0;
+	margin-top: 10px;
 	.user-data {
 		display: flex;
 		align-items: center;
@@ -57,5 +86,12 @@ export const UserRow = styled(UserRowContainer)`
 	.role_id-column {
 		width: 200px;
 		display: flex;
+	}
+
+	.icon-disabled {
+		opacity: 0.4;
+		color: #888;
+		cursor: default;
+		pointer-events: none;
 	}
 `;

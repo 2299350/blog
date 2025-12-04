@@ -12,6 +12,21 @@ const UsersContainer = ({ className }) => {
 
 	const requestServer = useServerRequest();
 
+	const handleRoleSave = async (id, role_id) => {
+		const resp = await requestServer(OPERATIONS.UPDATE_USER, { id, role_id });
+
+		if (resp.error) {
+			console.error('[Users] handleRoleSave ERROR', resp.error);
+			return;
+		}
+
+		const updatedUser = resp.res;
+
+		setUsers((prev) =>
+			prev.map((user) => (user.id === id ? { ...user, ...updatedUser } : user)),
+		);
+	};
+
 	useEffect(() => {
 		let isCancelled = false;
 
@@ -65,10 +80,12 @@ const UsersContainer = ({ className }) => {
 				{users.map(({ id, login, registered_at, role_id }) => (
 					<UserRow
 						key={id}
+						id={id}
 						login={login}
 						registered_at={registered_at}
 						role_id={role_id}
 						roles={roles}
+						onRoleSave={handleRoleSave}
 					/>
 				))}
 			</div>
@@ -82,6 +99,7 @@ export const Users = styled(UsersContainer)`
 	align-items: center;
 	width: 600px;
 	margin: 0 auto;
+	font-size: 18px;
 
 	& > div {
 		width: 100%;
