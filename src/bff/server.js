@@ -1,49 +1,18 @@
-import { getUser } from './get-user';
-import { createUser } from './create-user';
-import { sessions } from './sessions';
+import { OPERATIONS } from '../constants';
+import {
+	authorize,
+	logout,
+	register,
+	fetchRoles,
+	fetchUsers,
+	updateUserOperation,
+} from './operations';
 
 export const server = {
-	async logout(session) {
-		sessions.remove(session);
-	},
-
-	async autorize(authLogin, authPassword) {
-		const user = await getUser(authLogin);
-
-		if (!user) {
-			return { error: 'The user has not been found', res: null };
-		}
-
-		if (user.password !== authPassword) {
-			return { error: 'The password is incorrect', res: null };
-		}
-
-		return {
-			error: null,
-			res: {
-				id: user.id,
-				login: user.login,
-				role_id: user.role_id,
-				session: sessions.create(user),
-			},
-		};
-	},
-
-	async register(regLogin, regPassword) {
-		const existingUser = await getUser(regLogin);
-		if (existingUser) {
-			return { error: 'This login is already taken', res: null };
-		}
-
-		const newUser = await createUser(regLogin, regPassword);
-		const { password, ...safeUser } = newUser;
-
-		return {
-			error: null,
-			res: {
-				...safeUser,
-				session: sessions.create(safeUser),
-			},
-		};
-	},
+	[OPERATIONS.AUTHORIZE]: authorize,
+	[OPERATIONS.LOGOUT]: logout,
+	[OPERATIONS.REGISTER]: register,
+	[OPERATIONS.FETCH_ROLES]: fetchRoles,
+	[OPERATIONS.FETCH_USERS]: fetchUsers,
+	[OPERATIONS.UPDATE_USER]: updateUserOperation,
 };

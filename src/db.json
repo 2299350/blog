@@ -1,6 +1,13 @@
 {
   "users": [
     {
+      "id": "e72dd",
+      "login": "admin",
+      "password": "qwerty123",
+      "role_id": 1,
+      "registered_at": "2026-01-15"
+    },
+    {
       "id": "001",
       "login": "anton",
       "password": "qwerty123",
@@ -33,6 +40,13 @@
       "login": "111",
       "password": "111111",
       "registered_at": "2061-12-20 01:49",
+      "role_id": 2
+    },
+    {
+      "id": "02cf",
+      "login": "buka",
+      "password": "qwerty123",
+      "registered_at": "2050-04-11 17:34",
       "role_id": 2
     }
   ],

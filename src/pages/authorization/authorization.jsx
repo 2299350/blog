@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { server } from '../../bff';
 import { Input, Button, H2, AuthFormError } from '../../components';
 import { useResetForm } from '../../hooks';
+import { saveUserToStorage } from '../../utils';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROLE } from '../../constants';
 import styled from 'styled-components';
@@ -59,12 +60,13 @@ const AuthorizationContainer = ({ className }) => {
 	useResetForm(reset);
 
 	const onSubmit = ({ login, password }) => {
-		server.autorize(login, password).then(({ error, res }) => {
+		server.authorize(login, password).then(({ error, res }) => {
 			if (error) {
 				setServerError(error);
 				return;
 			}
 			dispatch(setUser(res));
+			saveUserToStorage(res);
 		});
 	};
 
