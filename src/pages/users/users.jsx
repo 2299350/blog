@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { H2, UserRow, TableRow, Content } from '../../components';
 import { useServerRequest } from '../../hooks';
 import { OPERATIONS } from '../../constants';
+import { selectUserLogin } from '../../selectors';
 import styled from 'styled-components';
 
 const UsersContainer = ({ className }) => {
@@ -11,6 +13,7 @@ const UsersContainer = ({ className }) => {
 	const [error, setError] = useState(null);
 
 	const requestServer = useServerRequest();
+	const currentLogin = useSelector(selectUserLogin);
 
 	const handleRoleSave = async (id, role_id) => {
 		const resp = await requestServer(OPERATIONS.UPDATE_USER, { id, role_id });
@@ -25,6 +28,21 @@ const UsersContainer = ({ className }) => {
 		setUsers((prev) =>
 			prev.map((user) => (user.id === id ? { ...user, ...updatedUser } : user)),
 		);
+	};
+
+	const handleUserDelete = async (id) => {
+		const isConfirmed = window.confirm('Удалить этого пользователя?');
+
+		if (!isConfirmed) return;
+
+		const resp = await requestServer(OPERATIONS.REMOVE_USER, { id });
+
+		if (resp.error) {
+			console.error('[Users] handleUserDelete ERROR', resp.error);
+			return;
+		}
+
+		setUsers((prev) => prev.filter((user) => user.id !== id));
 	};
 
 	useEffect(() => {
@@ -85,7 +103,9 @@ const UsersContainer = ({ className }) => {
 						registered_at={registered_at}
 						role_id={role_id}
 						roles={roles}
+						isCurrentUser={currentLogin === login}
 						onRoleSave={handleRoleSave}
+						onUserDelete={handleUserDelete}
 					/>
 				))}
 			</div>

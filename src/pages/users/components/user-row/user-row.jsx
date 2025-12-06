@@ -10,7 +10,9 @@ const UserRowContainer = ({
 	registered_at,
 	role_id,
 	roles,
+	isCurrentUser,
 	onRoleSave,
+	onUserDelete,
 }) => {
 	const [currentRoleId, setCurrentRoleId] = useState(role_id);
 
@@ -18,7 +20,8 @@ const UserRowContainer = ({
 		setCurrentRoleId(Number(target.value));
 	};
 
-	const isSaveDisabled = currentRoleId === role_id;
+	const isSaveDisabled = currentRoleId === role_id || isCurrentUser;
+	const isDeleteDisabled = isCurrentUser;
 
 	return (
 		<div className={className}>
@@ -31,10 +34,15 @@ const UserRowContainer = ({
 						<select
 							name="role_id"
 							value={currentRoleId}
+							disabled={isCurrentUser}
 							onChange={onRoleChange}
 						>
 							{roles.map(({ id: roleId, name: roleName }) => (
-								<option key={roleId} value={roleId}>
+								<option
+									key={roleId}
+									value={roleId}
+									disabled={Number(roleId) === 3} // запрещаем выбирать гостя
+								>
 									{roleName}
 								</option>
 							))}
@@ -56,8 +64,12 @@ const UserRowContainer = ({
 					<Icon
 						id="fa-trash-o"
 						margin="0 0 0 10px"
+						disabled={isCurrentUser}
+						className={isDeleteDisabled ? 'icon-disabled' : ''}
 						onClick={() => {
-							/* TODO */
+							if (isDeleteDisabled) return;
+
+							onUserDelete(id);
 						}}
 					/>
 				</div>

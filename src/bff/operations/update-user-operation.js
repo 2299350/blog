@@ -1,6 +1,17 @@
 import { updateUser } from '../api';
+import { sessions } from '../sessions';
+import { ROLE } from '../constants';
 
-export const updateUserOperation = async (user) => {
+export const updateUserOperation = async (userSession, user) => {
+	// 1. Кто имеет право менять роли
+	const accessRoles = [ROLE.ADMIN];
+
+	// 2. Проверка доступа по сессии
+	if (!sessions.access(userSession, accessRoles)) {
+		return { error: 'Access is denied', res: null };
+	}
+
+	// 3. Непосредственно обновление
 	try {
 		const updatedUser = await updateUser(user);
 
