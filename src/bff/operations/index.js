@@ -5,3 +5,4 @@ export * from './register';
 export * from './fetch-roles';
 export * from './fetch-users';
 export * from './update-user-operation';
+export * from './remove-user-operation';

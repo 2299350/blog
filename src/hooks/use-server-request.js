@@ -12,11 +12,7 @@ export const useServerRequest = () => {
 	const dispatch = useDispatch();
 
 	// список операций, которым НЕ нужна сессия
-	const noSessionOps = new Set([
-		OPERATIONS.REGISTER,
-		OPERATIONS.AUTHORIZE,
-		OPERATIONS.UPDATE_USER,
-	]);
+	const noSessionOps = new Set([OPERATIONS.REGISTER, OPERATIONS.AUTHORIZE]);
 
 	// основная функция — мемоизирована
 	return useCallback(
