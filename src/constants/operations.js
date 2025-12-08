@@ -6,4 +6,5 @@ export const OPERATIONS = {
 	FETCH_USERS: 'fetchUsers',
 	UPDATE_USER: 'updateUser',
 	REMOVE_USER: 'removeUser',
+	FETCH_POST: 'fetchPost',
 };

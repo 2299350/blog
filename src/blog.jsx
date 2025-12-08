@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Header, Footer } from './components';
-import { Authorization, Registration, Users } from './pages';
+import { Authorization, Registration, Users, Post } from './pages';
 import { useInitAuth } from './hooks';
 import styled from 'styled-components';
 
@@ -45,8 +45,11 @@ function Blog() {
 					<Route path="/login" element={<Authorization />} />
 					<Route path="/register" element={<Registration />} />
 					<Route path="/users" element={<Users />} />
-					<Route path="/post" element={<div>Add Post</div>} />
-					<Route path="/post/:postId" element={<div>Post</div>} />
+					<Route
+						path="/post"
+						element={<a href="http://localhost:3000/post/101">Posts</a>}
+					/>
+					<Route path="/post/:id" element={<Post />} />
 					<Route path="*" element={<div>Error</div>} />
 				</Routes>
 			</Page>
