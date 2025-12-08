@@ -67,42 +67,48 @@
       "title": "Welcome to the Blog",
       "image_url": "https://fastly.picsum.photos/id/120/280/150.jpg?hmac=rSi0RQMH8DG7segRH6XA-ZtgL6xrAaUr886KJUuixaQ",
       "content": "Many developers dream about joining massive teams and working on complex systems, but small projects often teach you faster. When you build something alone, you touch every part of the stack: frontend, backend, deployment, and testing. You learn how decisions in one layer affect the rest. There is no one to hide behind, so you develop a better understanding of how software actually works. Small projects also allow quick iteration. You write code, test it, break it, fix it, and see results the same day. This short feedback loop keeps motivation high and helps you experiment with tools that large teams avoid. Finally, when the project succeeds, you own the entire result. It is not just a line on a resume, but a working product that reflects your growth as a developer. So if you feel stuck waiting for a big opportunity, start small. You might be surprised how far it takes you.",
-      "published_at": "2026-01-16"
+      "published_at": "2026-01-16",
+	  "comments": []
     },
     {
       "id": "102",
       "title": "The Power of Consistency in Coding",
       "image_url": "https://fastly.picsum.photos/id/242/280/150.jpg?hmac=9Ge84TR3zmuMjSYg4nugFZWZUJDpsv13dc5WF7HYF-c",
       "content": "Writing code every day, even for a short time, helps your brain stay in problem solving mode. Consistency builds confidence, not perfection. When you code regularly, syntax becomes second nature and you start thinking in patterns instead of single lines. This allows you to focus on architecture and logic rather than small mistakes. The trick is not to burn out. Set small goals, like fixing one bug or learning one new method. Over months, these tiny steps compound into massive progress. Remember, growth in programming is not about working harder, it is about working steadily.",
-      "published_at": "2026-01-17"
+      "published_at": "2026-01-17",
+	  "comments": []
     },
     {
       "id": "103",
       "title": "Why Frontend Developers Should Learn Backend",
       "image_url": "https://fastly.picsum.photos/id/184/280/150.jpg?hmac=CvZF-dRgT3ZlCFg1zkxS3TkhyUjFbWgmTuQYYgxru68",
       "content": "Many frontend developers fear backend because it looks complex, but learning even the basics can change the way you think about web apps. Understanding APIs, databases, and authentication gives you more control over how your UI behaves. You stop depending entirely on backend teams and can prototype features faster. Even simple Node.js or Python scripts help you connect the dots between client and server. It also makes you more valuable as a full stack developer. The web is one system, not two separate worlds. The more you see both sides, the more complete your skill set becomes.",
-      "published_at": "2026-01-18"
+      "published_at": "2026-01-18",
+	  "comments": []
     },
     {
       "id": "104",
       "title": "Debugging as a Superpower",
       "image_url": "https://fastly.picsum.photos/id/13/280/150.jpg?hmac=dYxBnjPvyLE2WOCnf4FIdrInch_XyT9qYw4QM24mXqE",
       "content": "Most developers see debugging as a boring step, but it is actually where you learn the most. Each bug tells a story about how your logic failed. When you slow down and trace it, you improve your problem solving instincts. Debugging also trains patience and precision. You learn to question assumptions instead of rewriting random code. Over time, you start designing cleaner systems because you remember what caused pain before. So the next time your app crashes, do not get angry. Take a breath and let the bug teach you something new.",
-      "published_at": "2026-01-19"
+      "published_at": "2026-01-19",
+	  "comments": []
     },
     {
       "id": "105",
       "title": "The Hidden Cost of Overengineering",
       "image_url": "https://fastly.picsum.photos/id/234/280/150.jpg?hmac=PgTr487zbb1IWT66eNKb4uOMkgjuJ_ZcVUWqGJdr4Oo",
       "content": "Developers love to make elegant systems, but sometimes elegance becomes a trap. Overengineering happens when you design for problems that do not exist yet. You add layers, abstractions, and complex patterns that slow you down later. The best code is simple, readable, and easy to change. Ask yourself before writing any feature: is this solving a real pain today or an imagined one tomorrow? Clean code is not about how clever it looks, it is about how quickly the next person can understand it. Often that next person is you in six months.",
-      "published_at": "2026-01-20"
+      "published_at": "2026-01-20",
+	  "comments": []
     },
     {
       "id": "106",
       "title": "Focus is the Real Developer Skill",
       "image_url": "https://fastly.picsum.photos/id/403/280/150.jpg?hmac=iZhTLN46BCVwoV9JMp2vS4wQSkcTf_hC4VuKBGFM7vQ",
       "content": "There are endless tutorials, frameworks, and libraries out there, but the best developers know how to ignore most of them. Focus is what separates progress from distraction. Pick one technology, one small project, and stick with it until it works. Every time you switch tools, you reset your learning curve. Deep focus turns theory into skill. The goal is not to know everything, but to master one thing at a time. When you finish, then move on. Step by step, you build real confidence instead of chasing the next shiny idea.",
-      "published_at": "2026-01-21"
+      "published_at": "2026-01-21",
+  	  "comments": []
     }
   ],
   "comments": []
