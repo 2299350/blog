@@ -26,6 +26,7 @@ const PostContainer = ({ className }) => {
 };
 
 export const Post = styled(PostContainer)`
+	padding: 40px 80px;
 	width: 1000px;
 	display: flex;
 	flex-direction: column;
