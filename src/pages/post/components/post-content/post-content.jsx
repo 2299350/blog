@@ -21,10 +21,14 @@ const PostContentContainer = ({
 			<H2>{title}</H2>
 
 			<div className="special-panel">
-				<div>{published_at}</div>
+				<div className="special-panel-date">
+					<Icon id="fa-calendar-o" className="calendar-icon" />
+					<div>{published_at}</div>
+				</div>
 				<div className="special-panel-icons">
 					<Icon
-						id="fa-trash-o"
+						id="fa-pencil-square-o"
+						size="21px"
 						disabled={isDisabled}
 						className={isDisabled ? 'icon-disabled' : ''}
 						onClick={() => {
@@ -35,6 +39,7 @@ const PostContentContainer = ({
 					/>
 					<Icon
 						id="fa-trash-o"
+						size="21px"
 						disabled={isDisabled}
 						className={isDisabled ? 'icon-disabled' : ''}
 						onClick={() => {
@@ -80,6 +85,18 @@ export const PostContent = styled(PostContentContainer)`
 		align-items: center;
 		justify-content: center;
 		gap: 10px;
+	}
+
+	.special-panel-date {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		font-size: 18px;
+	}
+
+	.calendar-icon {
+		cursor: default;
 	}
 
 	H2 {
