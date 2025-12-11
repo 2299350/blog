@@ -3,8 +3,14 @@ import { Icon } from '../../../../components';
 import { Comment } from './components/comment/comment';
 import styled from 'styled-components';
 
-const CommentsContainer = ({ className }) => {
+const CommentsContainer = ({ className, postId }) => {
 	const [newComment, setNewComment] = useState('');
+	const isDisabled = false;
+
+	const onNewCommentAdd = (postId, text) => {
+		console.log('Adding new comment to post:', postId, 'Comment:', text);
+		setNewComment('');
+	};
 
 	const comments = [
 		{
@@ -20,6 +26,7 @@ const CommentsContainer = ({ className }) => {
 		<div className={className}>
 			<div className="new-comment">
 				<textarea
+					name="new-comment"
 					placeholder="Введите ваш комментарий..."
 					rows={5}
 					value={newComment}
@@ -28,13 +35,13 @@ const CommentsContainer = ({ className }) => {
 				<Icon
 					id="fa-paper-plane-o"
 					size="21px"
-					// disabled={isDisabled}
-					// className={isDisabled ? 'icon-disabled' : ''}
-					// onClick={() => {
-					// 	if (isDisabled) return;
+					disabled={isDisabled}
+					className={isDisabled ? 'icon-disabled' : ''}
+					onClick={() => {
+						if (isDisabled) return;
 
-					// 	// onUserDelete(id);
-					// }}
+						onNewCommentAdd(postId, newComment);
+					}}
 				/>
 			</div>
 
@@ -69,5 +76,12 @@ export const Comments = styled(CommentsContainer)`
 		width: 100%;
 		font-size: 16px;
 		padding: 6px;
+	}
+
+	.icon-disabled {
+		opacity: 0.4;
+		color: #888;
+		cursor: default;
+		pointer-events: none;
 	}
 `;
