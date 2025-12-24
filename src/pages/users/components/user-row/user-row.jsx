@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Icon } from '../../../../components';
 import { TableRow } from '../table-row/table-row';
 import { useCheckAccess } from '../../../../hooks';
-import { PERMISSION } from '../../../../constants';
+import { PERMISSION, ROLE } from '../../../../constants';
 import styled from 'styled-components';
 
 const UserRowContainer = ({
@@ -16,6 +16,11 @@ const UserRowContainer = ({
 	onUserDelete,
 }) => {
 	const [currentRoleId, setCurrentRoleId] = useState(role_id);
+
+	// СИНХРОНИЗАЦИЯ: Если проп изменился (например, после сохранения), обновляем стейт
+	useEffect(() => {
+		setCurrentRoleId(role_id);
+	}, [role_id]);
 
 	// 1. Проверяем права на действия с ЭТИМ пользователем (передаем id)
 	const canUpdateRole = useCheckAccess(PERMISSION.UPDATE_USER_ROLE, id);
@@ -46,7 +51,7 @@ const UserRowContainer = ({
 								<option
 									key={roleId}
 									value={roleId}
-									disabled={Number(roleId) === 3}
+									disabled={Number(roleId) === ROLE.GUEST}
 								>
 									{roleName}
 								</option>

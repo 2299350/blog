@@ -1,19 +1,26 @@
 import { updateUser } from '../api';
 import { sessions } from '../sessions';
-import { ROLE } from '../constants';
+import { PERMISSION } from '../../constants';
 
-export const updateUserOperation = async (userSession, user) => {
-	// 1. Кто имеет право менять роли
-	const accessRoles = [ROLE.ADMIN];
+export const updateUserOperation = async (hash, { id, role_id }) => {
+	const { access, excludeSelf } = PERMISSION.UPDATE_USER_ROLE;
 
-	// 2. Проверка доступа по сессии
-	if (!sessions.access(userSession, accessRoles)) {
+	const currentUser = await sessions.getUser(hash);
+
+	if (!currentUser) {
 		return { error: 'Access is denied', res: null };
 	}
 
-	// 3. Непосредственно обновление
+	if (!access.includes(currentUser.role_id)) {
+		return { error: 'Access is denied', res: null };
+	}
+
+	if (excludeSelf && currentUser.id === id) {
+		return { error: 'Нельзя изменить роль самому себе', res: null };
+	}
+
 	try {
-		const updatedUser = await updateUser(user);
+		const updatedUser = await updateUser({ id, role_id });
 
 		return {
 			error: null,
@@ -25,7 +32,7 @@ export const updateUserOperation = async (userSession, user) => {
 		};
 	} catch (e) {
 		return {
-			error: e.message || 'Не удалось обновить пользователя',
+			error: e.message || 'Не удалось обновить роль пользователя',
 			res: null,
 		};
 	}

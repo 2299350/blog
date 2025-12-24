@@ -1,36 +1,24 @@
-// 1. Загружаем базу сессий (или создаем пустую)
-let savedSessions = JSON.parse(localStorage.getItem('sessions')) || {};
-
-// 2. ХАК ДЛЯ MOCK-СЕРВЕРА:
-// Восстанавливаем сессию из userData, если сервер "забыл" её после F5
-const currentUser = JSON.parse(localStorage.getItem('userData'));
-
-if (currentUser && currentUser.session && !savedSessions[currentUser.session]) {
-	savedSessions[currentUser.session] = currentUser;
-	localStorage.setItem('sessions', JSON.stringify(savedSessions));
-}
+import { addSession, deleteSession, getSession } from './api';
 
 export const sessions = {
-	list: savedSessions,
-
-	create(user) {
+	async create(user) {
 		const hash = Math.random().toFixed(50).toString();
-
-		this.list[hash] = user;
-
-		localStorage.setItem('sessions', JSON.stringify(this.list));
-
+		await addSession(hash, user);
 		return hash;
 	},
 
-	remove(hash) {
-		delete this.list[hash];
-
-		localStorage.setItem('sessions', JSON.stringify(this.list));
+	async remove(hash) {
+		await deleteSession(hash);
 	},
 
-	access(hash, accessRoles) {
-		const user = this.list[hash];
-		return !!user && accessRoles.includes(user.role_id);
+	async access(hash, accessRoles) {
+		const session = await getSession(hash);
+		return !!session?.user && accessRoles.includes(session.user.role_id);
+	},
+
+	async getUser(hash) {
+		const session = await getSession(hash);
+		// Возвращаем юзера или null, если сессия не найдена
+		return session?.user;
 	},
 };
