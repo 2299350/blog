@@ -6,7 +6,7 @@ import { selectPost } from '../../selectors';
 import { PostContent } from './components';
 import { Comments } from './components';
 import styled from 'styled-components';
-import { loadPostAsync } from '../../actions';
+import { loadPostAsync, loadCommentsAsync } from '../../actions';
 
 const PostContainer = ({ className }) => {
 	const dispatch = useDispatch();
@@ -16,7 +16,9 @@ const PostContainer = ({ className }) => {
 
 	useEffect(() => {
 		dispatch(loadPostAsync(requestServer, id));
+		dispatch(loadCommentsAsync(requestServer, id));
 	}, [requestServer, id, dispatch]);
+
 	return (
 		<div className={className}>
 			<PostContent {...post} />

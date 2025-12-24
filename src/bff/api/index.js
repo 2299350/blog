@@ -5,3 +5,7 @@ export * from './get-roles';
 export * from './update-user';
 export * from './delete-user';
 export * from './get-post';
+export * from './create-comment';
+export * from './get-comments-by-post-id';
+export * from './get-comment';
+export * from './delete-comment';

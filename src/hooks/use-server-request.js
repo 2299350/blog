@@ -5,7 +5,6 @@ import { server } from '../bff';
 import { OPERATIONS } from '../constants';
 import { useDispatch } from 'react-redux';
 import { logout } from '../actions/logout';
-import { clearUserFromStorage } from '../utils';
 
 export const useServerRequest = () => {
 	const session = useSelector(selectUserSession);
@@ -16,6 +15,7 @@ export const useServerRequest = () => {
 		OPERATIONS.REGISTER,
 		OPERATIONS.AUTHORIZE,
 		OPERATIONS.FETCH_POST,
+		OPERATIONS.FETCH_COMMENTS,
 	]);
 
 	// основная функция — мемоизирована
@@ -32,9 +32,8 @@ export const useServerRequest = () => {
 			// если доступ запрещён, выходим из системы
 			if (resp?.error === 'Access is denied') {
 				// логический выход
-				dispatch(logout());
-				// физический выход
-				clearUserFromStorage();
+				// dispatch(logout());
+				console.warn('Access is denied - logging out');
 			}
 
 			return resp;

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { H2, UserRow, TableRow, Content } from '../../components';
 import { useServerRequest } from '../../hooks';
 import { OPERATIONS } from '../../constants';
-import { selectUserLogin } from '../../selectors';
 import styled from 'styled-components';
 
 const UsersContainer = ({ className }) => {
@@ -13,7 +11,6 @@ const UsersContainer = ({ className }) => {
 	const [error, setError] = useState(null);
 
 	const requestServer = useServerRequest();
-	const currentLogin = useSelector(selectUserLogin);
 
 	const handleRoleSave = async (id, role_id) => {
 		const resp = await requestServer(OPERATIONS.UPDATE_USER, { id, role_id });
@@ -103,7 +100,6 @@ const UsersContainer = ({ className }) => {
 						registered_at={registered_at}
 						role_id={role_id}
 						roles={roles}
-						isCurrentUser={currentLogin === login}
 						onRoleSave={handleRoleSave}
 						onUserDelete={handleUserDelete}
 					/>

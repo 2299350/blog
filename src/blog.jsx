@@ -1,7 +1,10 @@
-import { Routes, Route } from 'react-router-dom';
+import { useLayoutEffect, useState } from 'react'; // Добавляем useState
+import { useDispatch } from 'react-redux';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Header, Footer } from './components';
 import { Authorization, Registration, Users, Post } from './pages';
-import { useInitAuth } from './hooks';
+import { setUser } from './actions';
+import { getUserSession } from './utils';
 import styled from 'styled-components';
 
 const AppColumn = styled.div`
@@ -19,20 +22,31 @@ const Page = styled.div`
 `;
 
 function Blog() {
-	const { isLoading } = useInitAuth();
+	const dispatch = useDispatch();
+	// 1. Блокируем отображение с самого начала
+	const [isLoading, setIsLoading] = useState(true);
 
+	useLayoutEffect(() => {
+		const currentUserData = getUserSession();
+
+		// Если данные есть, диспатчим их
+		if (currentUserData) {
+			dispatch(
+				setUser({
+					...currentUserData,
+					role_id: Number(currentUserData.role_id),
+				}),
+			);
+		}
+
+		// 2. Только когда закончили с Redux — убираем лоадер
+		setIsLoading(false);
+	}, [dispatch]);
+
+	// 3. Если идет загрузка — не рисуем Routes вообще.
+	// Компонент Users даже не смонтируется и не отправит кривой запрос.
 	if (isLoading) {
-		return (
-			<AppColumn>
-				<Header />
-				<Page>
-					<div style={{ textAlign: 'center', marginTop: '50px' }}>
-						Загрузка приложения...
-					</div>
-				</Page>
-				<Footer />
-			</AppColumn>
-		);
+		return <div>Загрузка...</div>;
 	}
 
 	return (
@@ -45,10 +59,7 @@ function Blog() {
 					<Route path="/login" element={<Authorization />} />
 					<Route path="/register" element={<Registration />} />
 					<Route path="/users" element={<Users />} />
-					<Route
-						path="/post"
-						element={<a href="http://localhost:3000/post/101">Posts</a>}
-					/>
+					<Route path="/post" element={<Navigate to="/post/101" replace />} />
 					<Route path="/post/:id" element={<Post />} />
 					<Route path="*" element={<div>Error</div>} />
 				</Routes>

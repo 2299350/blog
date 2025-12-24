@@ -9,6 +9,7 @@ import {
 } from '../../../../selectors';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../../actions';
+import { removeUserSession } from '../../../../utils';
 import styled from 'styled-components';
 
 const RightAligned = styled.div`
@@ -35,6 +36,11 @@ const ControlPanelContainer = ({ className }) => {
 	const dispatch = useDispatch();
 	const session = useSelector(selectUserSession);
 
+	const onLogout = () => {
+		dispatch(logout(session));
+		removeUserSession();
+	};
+
 	return (
 		<div className={className}>
 			<RightAligned>
@@ -45,11 +51,7 @@ const ControlPanelContainer = ({ className }) => {
 				) : (
 					<UserBlock>
 						<UserName>{login}</UserName>
-						<Icon
-							id="fa-sign-out"
-							margin="0 0 0 10px"
-							onClick={() => dispatch(logout(session))}
-						/>
+						<Icon id="fa-sign-out" margin="0 0 0 10px" onClick={onLogout} />
 					</UserBlock>
 				)}
 			</RightAligned>
