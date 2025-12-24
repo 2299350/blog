@@ -3,7 +3,7 @@ import { getComment, deleteComment } from '../api';
 import { PERMISSION } from '../../constants'; // <--- Берем правила из конфига
 
 export const removeComment = async (hash, id) => {
-	const currentUser = sessions.list[hash];
+	const currentUser = await sessions.getUser(hash);
 
 	if (!currentUser) {
 		return { error: 'Access is denied', res: null };

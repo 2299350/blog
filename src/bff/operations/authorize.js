@@ -12,13 +12,15 @@ export const authorize = async (authLogin, authPassword) => {
 		return { error: 'The password is incorrect', res: null };
 	}
 
+	const session = await sessions.create(user);
+
 	return {
 		error: null,
 		res: {
 			id: user.id,
 			login: user.login,
 			role_id: user.role_id,
-			session: sessions.create(user),
+			session,
 		},
 	};
 };

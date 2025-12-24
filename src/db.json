@@ -15,25 +15,11 @@
       "registered_at": "2026-01-15"
     },
     {
-      "id": "e72b",
-      "login": "ivan",
-      "password": "qwert123",
-      "registered_at": "2033-12-21 20:53",
-      "role_id": 1
-    },
-    {
-      "id": "02cf",
-      "login": "buka",
-      "password": "qwerty123",
-      "registered_at": "2050-04-11 17:34",
-      "role_id": 0
-    },
-    {
       "id": "47ab",
       "login": "frank",
       "password": "qwerty123",
       "registered_at": "2049-10-11 21:42",
-      "role_id": 2
+      "role_id": 0
     }
   ],
   "roles": [
@@ -149,13 +135,6 @@
       "content": "qwww"
     },
     {
-      "id": "3979",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2041-02-15 00:45",
-      "content": "1234567890"
-    },
-    {
       "id": "d438",
       "author_id": "001",
       "post_id": "101",
@@ -170,11 +149,45 @@
       "content": "Френк добавил коммент"
     },
     {
-      "id": "c64c",
+      "id": "8e72",
+      "author_id": "47ab",
+      "post_id": "102",
+      "published_at": "2060-11-01 23:04",
+      "content": "wwww"
+    },
+    {
+      "id": "7aba",
+      "author_id": "47ab",
+      "post_id": "102",
+      "published_at": "2056-05-28 01:44",
+      "content": "ццц"
+    },
+    {
+      "id": "6e3f",
+      "author_id": "001",
+      "post_id": "101",
+      "published_at": "2033-10-30 04:39",
+      "content": "qqq"
+    },
+    {
+      "id": "8463",
       "author_id": "47ab",
       "post_id": "101",
-      "published_at": "2044-07-15 18:42",
-      "content": "ццц"
+      "published_at": "2060-08-31 11:17",
+      "content": "wwwwww"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "876b",
+      "hash": "0.60308085932538824103232855122769251465797424316406",
+      "user": {
+        "id": "001",
+        "login": "anton",
+        "password": "qwerty123",
+        "role_id": 0,
+        "registered_at": "2026-01-15"
+      }
     }
   ]
 }
