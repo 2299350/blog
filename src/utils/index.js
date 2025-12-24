@@ -1,2 +1,3 @@
 export * from './getFormattedDate';
-export * from './user-storage';
+export * from './local-storage';
+export * from './check-access';

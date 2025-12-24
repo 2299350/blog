@@ -1,7 +1,26 @@
 import { Icon } from '../../../../../../components/';
+import { useCheckAccess } from '../../../../../../hooks';
+import { PERMISSION } from '../../../../../../constants';
 import styled from 'styled-components';
 
-const CommentContainer = ({ className, id, author, content, publishedAt }) => {
+const CommentContainer = ({
+	className,
+	id,
+	author,
+	content,
+	publishedAt,
+	authorId,
+	onDelete,
+}) => {
+	// Проверяем права (Админ, Модератор или Владелец)
+	const isAllowed = useCheckAccess(PERMISSION.DELETE_COMMENT, authorId);
+
+	const onCommentDelete = () => {
+		// Если прав нет — клик не работает
+		if (!isAllowed) return;
+		onDelete(id);
+	};
+
 	return (
 		<div className={className}>
 			<div className="comment-block">
@@ -17,16 +36,15 @@ const CommentContainer = ({ className, id, author, content, publishedAt }) => {
 				</div>
 				<div className="content-panel">{content}</div>
 			</div>
+
+			{/* Иконка рендерится всегда, но дизейблится классом */}
 			<Icon
 				id="fa-trash-o"
 				size="21px"
-				// disabled={isDisabled}
-				// className={isDisabled ? 'icon-disabled' : ''}
-				// onClick={() => {
-				// 	if (isDisabled) return;
-
-				// 	// onUserDelete(id);
-				// }}
+				margin="0 0 0 10px"
+				className={!isAllowed ? 'icon-disabled' : ''}
+				disabled={!isAllowed}
+				onClick={onCommentDelete}
 			/>
 		</div>
 	);
@@ -68,5 +86,12 @@ export const Comment = styled(CommentContainer)`
 		display: flex;
 		align-items: start;
 		font-size: 16px;
+	}
+
+	.icon-disabled {
+		opacity: 0.4;
+		color: #888;
+		cursor: default;
+		pointer-events: none;
 	}
 `;

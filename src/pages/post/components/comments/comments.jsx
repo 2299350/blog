@@ -1,26 +1,31 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserId } from '../../../../selectors';
 import { Icon } from '../../../../components';
 import { Comment } from './components/comment/comment';
+import { useServerRequest } from '../../../../hooks';
+import { addCommentAsync, removeCommentAsync } from '../../../../actions';
 import styled from 'styled-components';
 
-const CommentsContainer = ({ className, postId }) => {
+const CommentsContainer = ({ className, comments, postId }) => {
 	const [newComment, setNewComment] = useState('');
-	const isDisabled = false;
+	const userId = useSelector(selectUserId);
+	const dispatch = useDispatch();
+	const requestServer = useServerRequest();
 
-	const onNewCommentAdd = (postId, text) => {
-		console.log('Adding new comment to post:', postId, 'Comment:', text);
+	const isDisabled = !userId || !(newComment ?? '').trim();
+
+	const onNewCommentAdd = (content) => {
+		dispatch(addCommentAsync(requestServer, userId, postId, content));
 		setNewComment('');
 	};
 
-	const comments = [
-		{
-			id: 1,
-			author: 'Иван Иванов',
-			content:
-				'Отличный пост! Очень информативно. Отличный пост! Очень информативно. Отличный пост! Очень информативно. Отличный пост! Очень информативно.',
-			published_at: '2024-06-01',
-		},
-	];
+	const onCommentRemove = (commentId) => {
+		if (!window.confirm('Удалить комментарий?')) {
+			return;
+		}
+		dispatch(removeCommentAsync(requestServer, commentId));
+	};
 
 	return (
 		<div className={className}>
@@ -39,8 +44,7 @@ const CommentsContainer = ({ className, postId }) => {
 					className={isDisabled ? 'icon-disabled' : ''}
 					onClick={() => {
 						if (isDisabled) return;
-
-						onNewCommentAdd(postId, newComment);
+						onNewCommentAdd(newComment);
 					}}
 				/>
 			</div>
@@ -51,8 +55,10 @@ const CommentsContainer = ({ className, postId }) => {
 						key={comment.id}
 						id={comment.id}
 						author={comment.author}
+						authorId={comment.author_id}
 						content={comment.content}
 						publishedAt={comment.published_at}
+						onDelete={onCommentRemove}
 					/>
 				))}
 			</div>

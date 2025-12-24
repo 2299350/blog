@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Icon } from '../../../../components';
 import { TableRow } from '../table-row/table-row';
+import { useCheckAccess } from '../../../../hooks';
+import { PERMISSION } from '../../../../constants';
 import styled from 'styled-components';
 
 const UserRowContainer = ({
@@ -10,18 +12,21 @@ const UserRowContainer = ({
 	registered_at,
 	role_id,
 	roles,
-	isCurrentUser,
 	onRoleSave,
 	onUserDelete,
 }) => {
 	const [currentRoleId, setCurrentRoleId] = useState(role_id);
 
+	// 1. Проверяем права на действия с ЭТИМ пользователем (передаем id)
+	const canUpdateRole = useCheckAccess(PERMISSION.UPDATE_USER_ROLE, id);
+	const canDeleteUser = useCheckAccess(PERMISSION.DELETE_USER, id);
+
 	const onRoleChange = ({ target }) => {
 		setCurrentRoleId(Number(target.value));
 	};
 
-	const isSaveDisabled = currentRoleId === role_id || isCurrentUser;
-	const isDeleteDisabled = isCurrentUser;
+	// 2. Блокируем кнопку, если нет прав ИЛИ роль не изменилась
+	const isSaveDisabled = !canUpdateRole || currentRoleId === role_id;
 
 	return (
 		<div className={className}>
@@ -34,14 +39,14 @@ const UserRowContainer = ({
 						<select
 							name="role_id"
 							value={currentRoleId}
-							disabled={isCurrentUser}
+							disabled={!canUpdateRole}
 							onChange={onRoleChange}
 						>
 							{roles.map(({ id: roleId, name: roleName }) => (
 								<option
 									key={roleId}
 									value={roleId}
-									disabled={Number(roleId) === 3} // запрещаем выбирать гостя
+									disabled={Number(roleId) === 3}
 								>
 									{roleName}
 								</option>
@@ -55,7 +60,6 @@ const UserRowContainer = ({
 							className={isSaveDisabled ? 'icon-disabled' : ''}
 							onClick={() => {
 								if (isSaveDisabled) return;
-
 								onRoleSave(id, currentRoleId);
 							}}
 						/>
@@ -64,11 +68,10 @@ const UserRowContainer = ({
 					<Icon
 						id="fa-trash-o"
 						margin="0 0 0 10px"
-						disabled={isCurrentUser}
-						className={isDeleteDisabled ? 'icon-disabled' : ''}
+						disabled={!canDeleteUser}
+						className={!canDeleteUser ? 'icon-disabled' : ''}
 						onClick={() => {
-							if (isDeleteDisabled) return;
-
+							if (!canDeleteUser) return;
 							onUserDelete(id);
 						}}
 					/>

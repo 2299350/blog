@@ -29,6 +29,7 @@ export const Header = styled(HeaderContainer)`
 	position: fixed;
 	top: 0;
 	width: 1000px;
+	z-index: 10;
 	background-color: #fff;
 	display: flex;
 	justify-content: space-between;

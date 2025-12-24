@@ -8,9 +8,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { server } from '../../bff';
 import { Input, Button, H2, AuthFormError } from '../../components';
 import { useResetForm } from '../../hooks';
-import { saveUserToStorage } from '../../utils';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROLE } from '../../constants';
+import { setUserSession } from '../../utils';
 import styled from 'styled-components';
 
 const authFormSchema = yup.object().shape({
@@ -66,7 +66,7 @@ const AuthorizationContainer = ({ className }) => {
 				return;
 			}
 			dispatch(setUser(res));
-			saveUserToStorage(res);
+			setUserSession(res);
 		});
 	};
 
