@@ -19,7 +19,14 @@
       "login": "frank",
       "password": "qwerty123",
       "registered_at": "2049-10-11 21:42",
-      "role_id": 0
+      "role_id": 1
+    },
+    {
+      "id": "c9d0",
+      "login": "newman",
+      "password": "qwerty123",
+      "registered_at": "2046-12-03 14:09",
+      "role_id": 2
     }
   ],
   "roles": [
@@ -182,18 +189,24 @@
       "post_id": "101",
       "published_at": "2048-09-26 21:44",
       "content": "New comment"
+    },
+    {
+      "id": "1863",
+      "author_id": "c9d0",
+      "post_id": "101",
+      "published_at": "2053-12-20 08:33",
+      "content": "newman"
     }
   ],
   "sessions": [
     {
-      "id": "876b",
-      "hash": "0.60308085932538824103232855122769251465797424316406",
+      "id": "14fb",
+      "hash": "0.61319575796163294789664632844505831599235534667969",
       "user": {
-        "id": "001",
-        "login": "anton",
-        "password": "qwerty123",
-        "role_id": 0,
-        "registered_at": "2026-01-15"
+        "id": "c9d0",
+        "login": "newman",
+        "registered_at": "2046-12-03 14:09",
+        "role_id": 2
       }
     }
   ]
