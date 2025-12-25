@@ -16,7 +16,7 @@ const CommentsContainer = ({ className, comments, postId }) => {
 	const isDisabled = !userId || !(newComment ?? '').trim();
 
 	const onNewCommentAdd = (content) => {
-		dispatch(addCommentAsync(requestServer, userId, postId, content));
+		dispatch(addCommentAsync(requestServer, postId, content));
 		setNewComment('');
 	};
 
