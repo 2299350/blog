@@ -27,6 +27,13 @@
       "password": "qwerty123",
       "registered_at": "2046-12-03 14:09",
       "role_id": 2
+    },
+    {
+      "id": "edb2",
+      "login": "userabuser",
+      "password": "qwerty123",
+      "registered_at": "2059-10-20 17:20",
+      "role_id": 2
     }
   ],
   "roles": [
@@ -93,118 +100,42 @@
   ],
   "comments": [
     {
-      "id": "bf02",
+      "id": "f679",
       "author_id": "001",
       "post_id": "101",
-      "published_at": "2064-12-29 08:20",
-      "content": "wwww"
+      "published_at": "2042-11-02 19:49",
+      "content": "Anton's comment"
     },
     {
-      "id": "fcce",
-      "author_id": "001",
+      "id": "bf09",
+      "author_id": "edb2",
       "post_id": "101",
-      "published_at": "2061-03-06 02:50",
+      "published_at": "2044-03-23 12:41",
       "content": "www"
     },
     {
-      "id": "549c",
-      "author_id": "001",
+      "id": "385f",
+      "author_id": "edb2",
       "post_id": "101",
-      "published_at": "2037-09-10 18:28",
-      "content": "Comment"
+      "published_at": "2035-10-14 08:34",
+      "content": "www"
     },
     {
-      "id": "544c",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2046-01-13 20:18",
-      "content": "111"
-    },
-    {
-      "id": "2d38",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2051-01-19 00:09",
-      "content": "ццццц"
-    },
-    {
-      "id": "0fb4",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2061-04-11 09:59",
-      "content": "202020"
-    },
-    {
-      "id": "cc64",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2048-06-15 06:11",
-      "content": "qwww"
-    },
-    {
-      "id": "d438",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2045-03-30 19:38",
-      "content": "qqqq"
-    },
-    {
-      "id": "2c2e",
-      "author_id": "47ab",
-      "post_id": "101",
-      "published_at": "2037-04-29 15:19",
-      "content": "Френк добавил коммент"
-    },
-    {
-      "id": "8e72",
-      "author_id": "47ab",
-      "post_id": "102",
-      "published_at": "2060-11-01 23:04",
-      "content": "wwww"
-    },
-    {
-      "id": "7aba",
-      "author_id": "47ab",
-      "post_id": "102",
-      "published_at": "2056-05-28 01:44",
-      "content": "ццц"
-    },
-    {
-      "id": "6e3f",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2033-10-30 04:39",
-      "content": "qqq"
-    },
-    {
-      "id": "8463",
-      "author_id": "47ab",
-      "post_id": "101",
-      "published_at": "2060-08-31 11:17",
-      "content": "wwwwww"
-    },
-    {
-      "id": "84ec",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2048-09-26 21:44",
-      "content": "New comment"
-    },
-    {
-      "id": "1863",
+      "id": "7661",
       "author_id": "c9d0",
       "post_id": "101",
-      "published_at": "2053-12-20 08:33",
-      "content": "newman"
+      "published_at": "2059-03-12 06:47",
+      "content": "wwww"
     }
   ],
   "sessions": [
     {
-      "id": "14fb",
-      "hash": "0.61319575796163294789664632844505831599235534667969",
+      "id": "4469",
+      "hash": "0.42472211963086636821174124634126201272010803222656",
       "user": {
         "id": "c9d0",
         "login": "newman",
+        "password": "qwerty123",
         "registered_at": "2046-12-03 14:09",
         "role_id": 2
       }

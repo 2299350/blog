@@ -1,18 +1,49 @@
-import { getPost } from '../api';
+import { getPost, getCommentsByPostId, getUsers } from '../api';
 
 export const fetchPost = async (postId) => {
-	try {
-		const post = await getPost(postId);
+	let post;
+	let error;
 
-		if (!post) {
-			return { error: 'Post not found', res: null };
-		}
+	try {
+		post = await getPost(postId);
+	} catch (postError) {
+		error = postError;
+	}
+
+	if (error) {
+		return {
+			error: error.message || 'Failed to fetch post',
+			res: null,
+		};
+	}
+
+	if (!post) {
+		return { error: 'Post not found', res: null };
+	}
+
+	// 2. Загружаем комментарии и пользователей параллельно (для скорости)
+	const [comments, users] = await Promise.all([
+		getCommentsByPostId(postId),
+		getUsers(),
+	]);
+
+	// 3. Превращаем ID в Логины
+	// Проходимся по каждому комментарию и ищем автора в списке юзеров
+	const commentsWithAuthor = comments.map((comment) => {
+		const user = users.find(({ id }) => id === comment.author_id);
 
 		return {
-			error: null,
-			res: post,
+			...comment,
+			author: user?.login || 'Unknown User', // Подставляем логин или заглушку
 		};
-	} catch (e) {
-		return { error: e.message || 'Failed to fetch post', res: null };
-	}
+	});
+
+	// 4. Возвращаем пост, в который вшиты уже "красивые" комментарии
+	return {
+		error: null,
+		res: {
+			...post,
+			comments: commentsWithAuthor,
+		},
+	};
 };
