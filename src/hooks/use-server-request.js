@@ -31,9 +31,7 @@ export const useServerRequest = () => {
 
 			// если доступ запрещён, выходим из системы
 			if (resp?.error === 'Access is denied') {
-				// логический выход
-				// dispatch(logout());
-				console.warn('Access is denied - logging out');
+				console.warn('Use Server Request: Access is denied');
 			}
 
 			return resp;

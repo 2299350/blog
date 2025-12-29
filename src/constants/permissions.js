@@ -36,4 +36,8 @@ export const PERMISSION = {
 		access: [ROLE.ADMIN],
 		excludeSelf: true, // Нельзя удалить самого себя
 	},
+
+	FETCH_USERS: {
+		access: [ROLE.ADMIN],
+	},
 };
