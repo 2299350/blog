@@ -36,6 +36,6 @@ export const useServerRequest = () => {
 
 			return resp;
 		},
-		[session, dispatch], // добавили dispatch в зависимости
+		[session, dispatch],
 	);
 };
