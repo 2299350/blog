@@ -18,7 +18,16 @@ export const sessions = {
 
 	async getUser(hash) {
 		const session = await getSession(hash);
-		// Возвращаем юзера или null, если сессия не найдена
-		return session?.user;
+
+		if (!session?.user) {
+			return null;
+		}
+
+		// Деструктуризация: вытаскиваем password в отдельную переменную,
+		// а всё остальное собираем в userWithoutPassword
+		const { password, ...userWithoutPassword } = session.user;
+
+		// Возвращаем объект БЕЗ пароля
+		return userWithoutPassword;
 	},
 };

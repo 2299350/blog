@@ -19,14 +19,7 @@
       "login": "frank",
       "password": "qwerty123",
       "registered_at": "2049-10-11 21:42",
-      "role_id": 1
-    },
-    {
-      "id": "c9d0",
-      "login": "newman",
-      "password": "qwerty123",
-      "registered_at": "2046-12-03 14:09",
-      "role_id": 2
+      "role_id": 0
     },
     {
       "id": "edb2",
@@ -114,29 +107,29 @@
       "content": "www"
     },
     {
-      "id": "385f",
-      "author_id": "edb2",
+      "id": "0662",
+      "author_id": "001",
       "post_id": "101",
-      "published_at": "2035-10-14 08:34",
-      "content": "www"
+      "published_at": "2043-07-14 08:02",
+      "content": "New Comment"
     },
     {
-      "id": "7661",
-      "author_id": "c9d0",
+      "id": "a3e9",
+      "author_id": "edb2",
       "post_id": "101",
-      "published_at": "2059-03-12 06:47",
-      "content": "wwww"
+      "published_at": "2057-07-07 04:27",
+      "content": "ййй"
     }
   ],
   "sessions": [
     {
-      "id": "4469",
-      "hash": "0.42472211963086636821174124634126201272010803222656",
+      "id": "6fb6",
+      "hash": "0.47431639251865354012238640279974788427352905273438",
       "user": {
-        "id": "c9d0",
-        "login": "newman",
+        "id": "edb2",
+        "login": "userabuser",
         "password": "qwerty123",
-        "registered_at": "2046-12-03 14:09",
+        "registered_at": "2059-10-20 17:20",
         "role_id": 2
       }
     }
