@@ -9,3 +9,5 @@ export * from './add-comment-data';
 export * from './load-comments-async';
 export * from './remove-comment-async';
 export * from './remove-comment';
+export * from './open-modal';
+export * from './close-modal';

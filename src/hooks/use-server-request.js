@@ -4,7 +4,6 @@ import { selectUserSession } from '../selectors';
 import { server } from '../bff';
 import { OPERATIONS } from '../constants';
 import { useDispatch } from 'react-redux';
-import { logout } from '../actions/logout';
 
 export const useServerRequest = () => {
 	const session = useSelector(selectUserSession);
