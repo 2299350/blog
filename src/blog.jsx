@@ -6,6 +6,7 @@ import { Authorization, Registration, Users, Post } from './pages';
 import { setUser } from './actions';
 import { getUserSession } from './utils';
 import styled from 'styled-components';
+import { Modal } from './components';
 
 const AppColumn = styled.div`
 	display: flex;
@@ -66,6 +67,7 @@ function Blog() {
 			</Page>
 
 			<Footer />
+			<Modal />
 		</AppColumn>
 	);
 }

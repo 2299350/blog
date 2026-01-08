@@ -4,7 +4,12 @@ import { selectUserId } from '../../../../selectors';
 import { Icon } from '../../../../components';
 import { Comment } from './components/comment/comment';
 import { useServerRequest } from '../../../../hooks';
-import { addCommentAsync, removeCommentAsync } from '../../../../actions';
+import {
+	addCommentAsync,
+	removeCommentAsync,
+	openModal,
+	closeModal,
+} from '../../../../actions';
 import styled from 'styled-components';
 
 const CommentsContainer = ({ className, comments, postId }) => {
@@ -21,10 +26,18 @@ const CommentsContainer = ({ className, comments, postId }) => {
 	};
 
 	const onCommentRemove = (commentId) => {
-		if (!window.confirm('Удалить комментарий?')) {
-			return;
-		}
-		dispatch(removeCommentAsync(requestServer, commentId));
+		dispatch(
+			openModal({
+				text: 'Удалить комментарий?',
+				onConfirm: () => {
+					// 1. Выполняем действие удаления
+					dispatch(removeCommentAsync(requestServer, commentId));
+					// 2. Закрываем модалку
+					dispatch(closeModal());
+				},
+				onCancel: () => dispatch(closeModal()),
+			}),
+		);
 	};
 
 	return (
