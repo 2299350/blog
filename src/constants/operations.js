@@ -10,4 +10,5 @@ export const OPERATIONS = {
 	ADD_COMMENT: 'addComment',
 	FETCH_COMMENTS: 'fetchComments',
 	REMOVE_COMMENT: 'removeComment',
+	SAVE_POST: 'savePost',
 };
