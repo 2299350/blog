@@ -11,6 +11,7 @@ const PostFormContainer = ({
 	content,
 	published_at,
 	onSave,
+	onPostDelete,
 }) => {
 	const imageRef = useRef(null);
 	const titleRef = useRef(null);
@@ -66,8 +67,7 @@ const PostFormContainer = ({
 						className={isDisabled ? 'icon-disabled' : ''}
 						onClick={() => {
 							if (isDisabled) return;
-
-							// onUserDelete(id);
+							onPostDelete(id);
 						}}
 					/>
 				</div>

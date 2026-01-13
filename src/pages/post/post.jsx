@@ -5,7 +5,15 @@ import { useServerRequest, useCheckAccess } from '../../hooks';
 import { selectPost } from '../../selectors';
 import { PostContent, PostForm } from './components';
 import { Comments } from './components';
-import { loadPostAsync, loadCommentsAsync, savePostAsync } from '../../actions';
+import {
+	loadPostAsync,
+	loadCommentsAsync,
+	savePostAsync,
+	removePostAsync,
+	openModal,
+	closeModal,
+	resetPostData,
+} from '../../actions';
 import { PERMISSION } from '../../constants';
 import styled from 'styled-components';
 
@@ -28,6 +36,12 @@ const PostContainer = ({ className }) => {
 		});
 
 		dispatch(loadCommentsAsync(requestServer, id));
+
+		//Добавляем функцию очистки (cleanup function)
+		// Она сработает, когда мы уйдем со страницы
+		return () => {
+			dispatch(resetPostData());
+		};
 	}, [requestServer, id, dispatch]);
 
 	const handlePostSave = async (postData) => {
@@ -38,6 +52,21 @@ const PostContainer = ({ className }) => {
 		if (savedPost && savedPost.id) {
 			navigate(`/post/${savedPost.id}`);
 		}
+	};
+
+	const handlePostDelete = (id) => {
+		dispatch(
+			openModal({
+				text: 'Удалить статью?',
+				onConfirm: async () => {
+					await dispatch(removePostAsync(requestServer, id));
+					dispatch(resetPostData());
+					navigate('/');
+					dispatch(closeModal());
+				},
+				onCancel: () => dispatch(closeModal()),
+			}),
+		);
 	};
 
 	if (isLoading) {
@@ -64,10 +93,14 @@ const PostContainer = ({ className }) => {
 	return (
 		<div className={className}>
 			{isEditing ? (
-				<PostForm {...post} onSave={handlePostSave} />
+				<PostForm
+					{...post}
+					onPostDelete={handlePostDelete}
+					onSave={handlePostSave}
+				/>
 			) : (
 				<>
-					<PostContent {...post} />
+					<PostContent {...post} onPostDelete={handlePostDelete} />
 					<Comments comments={post.comments ?? []} postId={post.id} />
 				</>
 			)}
