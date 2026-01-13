@@ -1,4 +1,7 @@
 import { H2, Icon } from '../../../../components';
+import { useCheckAccess } from '../../../../hooks';
+import { PERMISSION } from '../../../../constants';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const PostContentContainer = ({
@@ -9,7 +12,12 @@ const PostContentContainer = ({
 	content,
 	published_at,
 }) => {
-	const isDisabled = false;
+	const navigate = useNavigate();
+
+	// 4. Проверяем права на редактирование и удаление поста
+	// (По текущей конфигурации прав это доступно только Админу)
+	const canEdit = useCheckAccess(PERMISSION.EDIT_POST);
+	const canDelete = useCheckAccess(PERMISSION.DELETE_POST);
 
 	if (!id) {
 		return <div className={className}>Загрузка поста...</div>;
@@ -29,28 +37,27 @@ const PostContentContainer = ({
 					<Icon
 						id="fa-pencil-square-o"
 						size="21px"
-						disabled={isDisabled}
-						className={isDisabled ? 'icon-disabled' : ''}
+						disabled={!canEdit}
+						className={!canEdit ? 'icon-disabled' : ''}
 						onClick={() => {
-							if (isDisabled) return;
-
-							// onUserDelete(id);
+							if (!canEdit) return;
+							navigate(`/post/${id}/edit`);
 						}}
 					/>
 					<Icon
 						id="fa-trash-o"
 						size="21px"
-						disabled={isDisabled}
-						className={isDisabled ? 'icon-disabled' : ''}
+						disabled={!canDelete}
+						className={!canDelete ? 'icon-disabled' : ''}
 						onClick={() => {
-							if (isDisabled) return;
-
-							// onUserDelete(id);
+							if (!canDelete) return;
+							// Здесь будет логика удаления (вызов модалки)
+							console.log('Удаление поста...');
 						}}
 					/>
 				</div>
 			</div>
-			<div>{content}</div>
+			<div className="text-content">{content}</div>
 		</div>
 	);
 };
@@ -78,6 +85,7 @@ export const PostContent = styled(PostContentContainer)`
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		margin-bottom: 20px; /* Добавил небольшой отступ снизу панели */
 	}
 
 	.special-panel-icons {
@@ -102,5 +110,10 @@ export const PostContent = styled(PostContentContainer)`
 	H2 {
 		margin-top: 0;
 		margin-bottom: 10px;
+	}
+
+	.text-content {
+		white-space: pre-line;
+		font-size: 18px;
 	}
 `;

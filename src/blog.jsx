@@ -62,6 +62,7 @@ function Blog() {
 					<Route path="/users" element={<Users />} />
 					<Route path="/post" element={<Navigate to="/post/101" replace />} />
 					<Route path="/post/:id" element={<Post />} />
+					<Route path="/post/:id/edit" element={<Post />} />
 					<Route path="*" element={<div>Error</div>} />
 				</Routes>
 			</Page>

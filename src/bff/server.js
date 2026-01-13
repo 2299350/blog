@@ -11,6 +11,7 @@ import {
 	addComment,
 	fetchComments,
 	removeComment,
+	savePost,
 } from './operations';
 
 export const server = {
@@ -25,4 +26,5 @@ export const server = {
 	[OPERATIONS.ADD_COMMENT]: addComment,
 	[OPERATIONS.FETCH_COMMENTS]: fetchComments,
 	[OPERATIONS.REMOVE_COMMENT]: removeComment,
+	[OPERATIONS.SAVE_POST]: savePost,
 };
