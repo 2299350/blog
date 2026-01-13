@@ -93,39 +93,11 @@
   ],
   "comments": [
     {
-      "id": "f679",
+      "id": "d7e3",
       "author_id": "001",
-      "post_id": "101",
-      "published_at": "2042-11-02 19:49",
-      "content": "Anton's comment"
-    },
-    {
-      "id": "bf09",
-      "author_id": "edb2",
-      "post_id": "101",
-      "published_at": "2044-03-23 12:41",
-      "content": "www"
-    },
-    {
-      "id": "0662",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2043-07-14 08:02",
-      "content": "New Comment"
-    },
-    {
-      "id": "e682",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2038-10-12 17:20",
-      "content": "23"
-    },
-    {
-      "id": "987b",
-      "author_id": "001",
-      "post_id": "101",
-      "published_at": "2058-11-16 17:26",
-      "content": "rrrrrr"
+      "post_id": "103",
+      "published_at": "2044-03-07 20:52",
+      "content": "103"
     }
   ],
   "sessions": [

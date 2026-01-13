@@ -11,6 +11,7 @@ const PostContentContainer = ({
 	image_url,
 	content,
 	published_at,
+	onPostDelete,
 }) => {
 	const navigate = useNavigate();
 
@@ -51,8 +52,7 @@ const PostContentContainer = ({
 						className={!canDelete ? 'icon-disabled' : ''}
 						onClick={() => {
 							if (!canDelete) return;
-							// Здесь будет логика удаления (вызов модалки)
-							console.log('Удаление поста...');
+							onPostDelete(id);
 						}}
 					/>
 				</div>
