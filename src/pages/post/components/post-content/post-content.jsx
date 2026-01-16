@@ -57,7 +57,7 @@ const PostContentContainer = ({
 					/>
 				</div>
 			</div>
-			<div className="text-content">{content}</div>
+			<div className="text-content" dangerouslySetInnerHTML={{ __html: content }} />
 		</div>
 	);
 };
