@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useParams, useMatch, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useServerRequest, useCheckAccess } from '../../hooks';
@@ -21,28 +21,32 @@ const PostContainer = ({ className }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const dispatch = useDispatch();
 	const { id } = useParams();
+	const isCreating = useMatch('/post');
 	const isEditing = useMatch('/post/:id/edit');
 	const navigate = useNavigate();
 	const requestServer = useServerRequest();
 	const post = useSelector(selectPost);
 
-	const canEdit = useCheckAccess(PERMISSION.EDIT_POST);
+	const specificPermission = isCreating ? PERMISSION.CREATE_POST : PERMISSION.EDIT_POST;
+	const hasAccess = useCheckAccess(specificPermission);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
+		dispatch(resetPostData()); // Сбрасываем данные при заходе (чтобы не мелькал старый пост)
+
+		// Если мы создаем пост — загружать ничего не надо
+		if (isCreating) {
+			setIsLoading(false);
+			return;
+		}
+
+		// Если есть ID — грузим пост
 		setIsLoading(true);
-
 		dispatch(loadPostAsync(requestServer, id)).then(() => {
 			setIsLoading(false);
 		});
 
 		dispatch(loadCommentsAsync(requestServer, id));
-
-		//Добавляем функцию очистки (cleanup function)
-		// Она сработает, когда мы уйдем со страницы
-		return () => {
-			dispatch(resetPostData());
-		};
-	}, [requestServer, id, dispatch]);
+	}, [requestServer, id, isCreating, dispatch]);
 
 	const handlePostSave = async (postData) => {
 		// Вызываем асинхронный экшен и ждем результат
@@ -73,26 +77,28 @@ const PostContainer = ({ className }) => {
 		return <div className={className}>Загрузка...</div>;
 	}
 
-	// Если ID нет — значит пост не найден
-	if (!post.id) {
+	// Если мы НЕ создаем статью, и пост не найден — ошибка 404
+	if (!isCreating && !post.id) {
 		return (
 			<div className={className}>
 				<div className="error">Такая страница не найдена</div>
 			</div>
 		);
 	}
-	//Если пытаемся редактировать без прав — показываем ошибку
-	if (isEditing && !canEdit) {
+
+	// Если мы пытаемся создать или редактировать без прав — ошибка доступа
+	if ((isCreating || isEditing) && !hasAccess) {
 		return (
 			<div className={className}>
-				<div className="error">У вас нет прав на редактирование этой статьи</div>
+				<div className="error">У вас нет прав на это действие</div>
 			</div>
 		);
 	}
 
 	return (
 		<div className={className}>
-			{isEditing ? (
+			{/* Показываем форму, если мы редактируем ИЛИ создаем */}
+			{isCreating || isEditing ? (
 				<PostForm
 					{...post}
 					onPostDelete={handlePostDelete}
