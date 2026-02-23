@@ -168,7 +168,6 @@ export const PostForm = styled(PostFormContainer)`
 	}
 
 	.error-message {
-		margin-top: 20px;
 		color: #d9534f;
 		text-align: center;
 		font-weight: bold;

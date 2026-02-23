@@ -11,8 +11,15 @@ const initialPostState = {
 
 export const postReducer = (state = initialPostState, action) => {
 	switch (action.type) {
+		// 1. Когда обновляем данные СТАТЬИ, защищаем существующие комментарии
 		case ACTION_TYPE.SET_POST_DATA:
-			return { ...state, ...action.payload };
+			return {
+				...state,
+				...action.payload,
+				comments: state.comments,
+			};
+
+		// 2. Когда приходят КОММЕНТАРИИ, мы кладем их в стейт
 		case ACTION_TYPE.SET_COMMENTS_DATA:
 			return {
 				...state,
