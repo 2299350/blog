@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from 'react'; // Добавляем useStat
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import { Header, Footer } from './components';
-import { Authorization, Registration, Users, Post } from './pages';
+import { Authorization, Registration, Users, Post, Main } from './pages';
 import { setUser } from './actions';
 import { getUserSession } from './utils';
 import styled from 'styled-components';
@@ -56,7 +56,7 @@ function Blog() {
 
 			<Page>
 				<Routes>
-					<Route path="/" element={<div>Main Page</div>} />
+					<Route path="/" element={<Main />} />
 					<Route path="/login" element={<Authorization />} />
 					<Route path="/register" element={<Registration />} />
 					<Route path="/users" element={<Users />} />

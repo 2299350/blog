@@ -7,6 +7,7 @@ export const OPERATIONS = {
 	UPDATE_USER: 'updateUser',
 	REMOVE_USER: 'removeUser',
 	FETCH_POST: 'fetchPost',
+	FETCH_POSTS: 'fetchPosts',
 	ADD_COMMENT: 'addComment',
 	FETCH_COMMENTS: 'fetchComments',
 	REMOVE_COMMENT: 'removeComment',
