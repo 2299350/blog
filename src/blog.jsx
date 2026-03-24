@@ -11,7 +11,6 @@ import { Modal } from './components';
 const AppColumn = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
 	width: 1000px;
 	min-height: 100%;
 	margin: 0 auto;
@@ -19,6 +18,8 @@ const AppColumn = styled.div`
 `;
 
 const Page = styled.div`
+	display: flex;
+	flex: 1;
 	padding: 120px 0 20px 0;
 `;
 

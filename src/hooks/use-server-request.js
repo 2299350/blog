@@ -15,6 +15,7 @@ export const useServerRequest = () => {
 		OPERATIONS.AUTHORIZE,
 		OPERATIONS.FETCH_POST,
 		OPERATIONS.FETCH_COMMENTS,
+		OPERATIONS.FETCH_POSTS,
 	]);
 
 	// основная функция — мемоизирована
