@@ -9,6 +9,7 @@ export * from './get-posts';
 export * from './create-comment';
 export * from './get-comments-by-post-id';
 export * from './get-comment';
+export * from './get-comments';
 export * from './delete-comment';
 export * from './add-session';
 export * from './get-session';
