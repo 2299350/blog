@@ -114,6 +114,7 @@ const RegistrationContainer = ({ className }) => {
 };
 
 export const Registration = styled(RegistrationContainer)`
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
