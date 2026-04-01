@@ -1,31 +1,32 @@
 import { sessions } from '../sessions';
 import { getComment, deleteComment } from '../api';
-import { PERMISSION } from '../../constants'; // <--- Берем правила из конфига
+import { PERMISSION } from '../../constants';
+import { checkAccess } from '../../utils';
 
 export const removeComment = async (hash, id) => {
 	const currentUser = await sessions.getUser(hash);
 
+	// Сессия битая или юзер не найден
 	if (!currentUser) {
 		return { error: 'Access is denied', res: null };
 	}
 
 	const comment = await getComment(id);
 
+	// Коммент не нашли — удалять нечего
 	if (!comment) {
 		return { error: 'Comment is not found', res: null };
 	}
 
-	// 1. Достаем правила из твоего файла permissions.js
-	const { access, ownerAllowed } = PERMISSION.DELETE_COMMENT;
+	const hasAccess = checkAccess(
+		PERMISSION.DELETE_COMMENT,
+		currentUser.role_id,
+		comment.author_id,
+		currentUser.id,
+	);
 
-	// 2. Проверяем роль (Админ или Модератор)
-	const hasRole = access.includes(currentUser.role_id);
-
-	// 3. Проверяем авторство (Владелец)
-	const isOwner = ownerAllowed && String(currentUser.id) === String(comment.author_id);
-
-	// Если ни роль не подходит, ни авторство — выкидываем
-	if (!hasRole && !isOwner) {
+	// Ни роль не подходит, ни это его коммент
+	if (!hasAccess) {
 		return { error: 'Access is denied', res: null };
 	}
 

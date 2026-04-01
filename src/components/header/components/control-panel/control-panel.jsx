@@ -1,16 +1,17 @@
-import { Link, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Icon, Button } from '../../../../components';
-import { useSelector } from 'react-redux';
-import { ROLE } from '../../../../constants';
+import { PERMISSION, ROLE } from '../../../../constants';
 import {
 	selectUserRole,
 	selectUserLogin,
 	selectUserSession,
 } from '../../../../selectors';
-import { useDispatch } from 'react-redux';
 import { logout } from '../../../../actions';
+import { useCheckAccess } from '../../../../hooks';
 import { removeUserSession } from '../../../../utils';
-import styled from 'styled-components';
 
 const RightAligned = styled.div`
 	display: flex;
@@ -31,23 +32,36 @@ const UserBlock = styled.div`
 
 const ControlPanelContainer = ({ className }) => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const role_id = useSelector(selectUserRole);
 	const login = useSelector(selectUserLogin);
 	const dispatch = useDispatch();
 	const session = useSelector(selectUserSession);
 
+	const canCreatePost = useCheckAccess(PERMISSION.CREATE_POST);
+	const canFetchUsers = useCheckAccess(PERMISSION.FETCH_USERS);
+
 	const onLogout = () => {
 		dispatch(logout(session));
 		removeUserSession();
+
+		// После выхода уводим на логин, если текущая страница больше недоступна
+		if (
+			location.pathname === '/users' ||
+			location.pathname === '/post' ||
+			location.pathname.includes('/edit')
+		) {
+			navigate('/login');
+		}
 	};
 
 	return (
 		<div className={className}>
 			<RightAligned>
 				{role_id === ROLE.GUEST ? (
-					<Button>
-						<Link to="/login">Войти</Link>
-					</Button>
+					<Link to="/login">
+						<Button>Войти</Button>
+					</Link>
 				) : (
 					<UserBlock>
 						<UserName>{login}</UserName>
@@ -55,20 +69,28 @@ const ControlPanelContainer = ({ className }) => {
 					</UserBlock>
 				)}
 			</RightAligned>
+
 			<RightAligned>
 				<Icon id="fa-backward" margin="10px 0 0 0" onClick={() => navigate(-1)} />
 
-				<Link to="/post">
-					<Icon id="fa-file-text-o" margin="10px 0 0 16px" />
-				</Link>
-				<Link to="/users">
-					<Icon id="fa-users" margin="10px 0 0 16px" />
-				</Link>
+				{canCreatePost && (
+					<Link to="/post">
+						<Icon id="fa-file-text-o" margin="10px 0 0 16px" />
+					</Link>
+				)}
+
+				{canFetchUsers && (
+					<Link to="/users">
+						<Icon id="fa-users" margin="10px 0 0 16px" />
+					</Link>
+				)}
 			</RightAligned>
 		</div>
 	);
 };
 
-export const ControlPanel = styled(ControlPanelContainer)`
-	/* Add styles for ControlPanel here if needed */
-`;
+ControlPanelContainer.propTypes = {
+	className: PropTypes.string,
+};
+
+export const ControlPanel = styled(ControlPanelContainer)``;

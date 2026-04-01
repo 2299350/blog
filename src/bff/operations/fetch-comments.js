@@ -1,4 +1,4 @@
-import { getCommentsByPostId, getUser } from '../api';
+import { getCommentsByPostId, getUserById } from '../api';
 
 export const fetchComments = async (postId) => {
 	try {
@@ -6,7 +6,7 @@ export const fetchComments = async (postId) => {
 
 		const enriched = await Promise.all(
 			(comments ?? []).map(async (comment) => {
-				const user = await getUser(comment.author_id);
+				const user = await getUserById(comment.author_id);
 
 				return {
 					...comment,

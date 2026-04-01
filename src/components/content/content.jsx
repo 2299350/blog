@@ -1,4 +1,5 @@
 import { H2 } from '../../components/h2/h2';
+import { ErrorBlock } from '../error-block/error-block';
 import styled from 'styled-components';
 
 const ContantContainer = ({ className, children, isLoading = false, error }) => {
@@ -15,7 +16,7 @@ const ContantContainer = ({ className, children, isLoading = false, error }) => 
 		return (
 			<div className={className}>
 				<H2>Пользователи</H2>
-				<p className="error">{error}</p>
+				<ErrorBlock error="Ошибка загрузки пользователей" />
 			</div>
 		);
 	}

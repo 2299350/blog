@@ -1,12 +1,12 @@
-import { useLayoutEffect, useState } from 'react'; // Добавляем useState
+import { useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
-import { Header, Footer } from './components';
-import { Authorization, Registration, Users, Post, Main } from './pages';
+import { Header, Footer, ErrorBlock, Modal, ProtectedRoute } from './components';
+import { Authorization, Registration, Users, Post, Main, AccessDenied } from './pages';
 import { setUser } from './actions';
+import { PERMISSION } from './constants';
 import { getUserSession } from './utils';
 import styled from 'styled-components';
-import { Modal } from './components';
 
 const AppColumn = styled.div`
 	display: flex;
@@ -25,13 +25,11 @@ const Page = styled.div`
 
 function Blog() {
 	const dispatch = useDispatch();
-	// 1. Блокируем отображение с самого начала
 	const [isLoading, setIsLoading] = useState(true);
 
 	useLayoutEffect(() => {
 		const currentUserData = getUserSession();
 
-		// Если данные есть, диспатчим их
 		if (currentUserData) {
 			dispatch(
 				setUser({
@@ -41,12 +39,11 @@ function Blog() {
 			);
 		}
 
-		// 2. Только когда закончили с Redux — убираем лоадер
+		// Ждём инициализацию пользователя до рендера маршрутов
 		setIsLoading(false);
 	}, [dispatch]);
 
-	// 3. Если идет загрузка — не рисуем Routes вообще.
-	// Компонент Users даже не смонтируется и не отправит кривой запрос.
+	// Пока не восстановили сессию, маршруты не рисуем
 	if (isLoading) {
 		return <div>Загрузка...</div>;
 	}
@@ -60,11 +57,43 @@ function Blog() {
 					<Route path="/" element={<Main />} />
 					<Route path="/login" element={<Authorization />} />
 					<Route path="/register" element={<Registration />} />
-					<Route path="/users" element={<Users />} />
-					<Route path="/post" element={<Post />} />
+					<Route path="/access-denied" element={<AccessDenied />} />
+
+					<Route
+						path="/users"
+						element={
+							<ProtectedRoute permission={PERMISSION.FETCH_USERS}>
+								<Users />
+							</ProtectedRoute>
+						}
+					/>
+
+					<Route
+						path="/post"
+						element={
+							<ProtectedRoute permission={PERMISSION.CREATE_POST}>
+								<Post />
+							</ProtectedRoute>
+						}
+					/>
+
 					<Route path="/post/:id" element={<Post />} />
-					<Route path="/post/:id/edit" element={<Post />} />
-					<Route path="*" element={<div>Error</div>} />
+
+					<Route
+						path="/post/:id/edit"
+						element={
+							<ProtectedRoute permission={PERMISSION.EDIT_POST}>
+								<Post />
+							</ProtectedRoute>
+						}
+					/>
+
+					<Route
+						path="*"
+						element={
+							<ErrorBlock error="404. Страницы с таким адресом не существует" />
+						}
+					/>
 				</Routes>
 			</Page>
 

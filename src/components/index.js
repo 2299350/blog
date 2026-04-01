@@ -8,3 +8,5 @@ export * from './auth-form-error/auth-form-error';
 export * from '../pages/users/components';
 export * from './content/content';
 export * from './modal/modal';
+export * from './error-block/error-block';
+export * from './protected-route/protected-route';

@@ -17,3 +17,4 @@ export * from './delete-session';
 export * from './update-post';
 export * from './add-post';
 export * from './delete-post';
+export * from './get-user-by-id';

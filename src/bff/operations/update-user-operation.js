@@ -1,22 +1,31 @@
 import { updateUser } from '../api';
 import { sessions } from '../sessions';
 import { PERMISSION } from '../../constants';
+import { checkAccess } from '../../utils';
 
 export const updateUserOperation = async (hash, { id, role_id }) => {
-	const { access, excludeSelf } = PERMISSION.UPDATE_USER_ROLE;
-
 	const currentUser = await sessions.getUser(hash);
 
+	// Сессия битая или юзер не найден
 	if (!currentUser) {
 		return { error: 'Access is denied', res: null };
 	}
 
-	if (!access.includes(currentUser.role_id)) {
-		return { error: 'Access is denied', res: null };
+	const hasAccess = checkAccess(
+		PERMISSION.UPDATE_USER_ROLE,
+		currentUser.role_id,
+		id,
+		currentUser.id,
+	);
+
+	// Если юзер пытается менять самого себя, даём нормальную ошибку
+	if (currentUser.id === id) {
+		return { error: 'Нельзя изменить роль самому себе', res: null };
 	}
 
-	if (excludeSelf && currentUser.id === id) {
-		return { error: 'Нельзя изменить роль самому себе', res: null };
+	// Прав нет — дальше не идём
+	if (!hasAccess) {
+		return { error: 'Access is denied', res: null };
 	}
 
 	try {

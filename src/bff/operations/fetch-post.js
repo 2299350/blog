@@ -12,13 +12,24 @@ export const fetchPost = async (postId) => {
 
 	if (error) {
 		return {
-			error: error.message || 'Failed to fetch post',
+			error: {
+				code: error.code || 'REQUEST_ERROR',
+				message: error.message || 'Failed to fetch post',
+				status: error.status || null,
+			},
 			res: null,
 		};
 	}
 
 	if (!post) {
-		return { error: 'Post not found', res: null };
+		return {
+			error: {
+				code: 'POST_NOT_FOUND',
+				message: 'Post not found',
+				status: 404,
+			},
+			res: null,
+		};
 	}
 
 	// 2. Загружаем комментарии и пользователей параллельно (для скорости)
