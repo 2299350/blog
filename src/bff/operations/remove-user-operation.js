@@ -1,32 +1,33 @@
 import { sessions } from '../sessions';
 import { deleteUser } from '../api';
-import { PERMISSION } from '../../constants'; // Импортируем конфиг
+import { PERMISSION } from '../../constants';
+import { checkAccess } from '../../utils';
 
 export const removeUserOperation = async (hash, { id }) => {
-	// 1. Достаем правила для удаления пользователя
-	const { access, excludeSelf } = PERMISSION.DELETE_USER;
+	const currentUser = await sessions.getUser(hash);
 
-	// 2. Получаем сессию пользователя (нам нужен сам объект юзера, чтобы сверить ID)
-	const user = await sessions.getUser(hash);
-
-	// Если сессии нет — выход
-	if (!user) {
+	// Сессия битая или юзер не найден
+	if (!currentUser) {
 		return { error: 'Access is denied', res: null };
 	}
 
-	// 3. ПРОВЕРКА РОЛИ: Есть ли роль пользователя в списке разрешенных?
-	// (например, является ли он Админом)
-	if (!access.includes(user.role_id)) {
-		return { error: 'Access is denied', res: null };
-	}
+	const hasAccess = checkAccess(
+		PERMISSION.DELETE_USER,
+		currentUser.role_id,
+		id,
+		currentUser.id,
+	);
 
-	// 4. ПРОВЕРКА SELF: Пытается ли он удалить сам себя?
-	// Если правило excludeSelf включено И id удаляемого совпадает с id текущего
-	if (excludeSelf && user.id === id) {
+	// Если юзер пытается удалить самого себя, даём нормальную ошибку
+	if (currentUser.id === id) {
 		return { error: 'Нельзя удалить самого себя', res: null };
 	}
 
-	// 5. Если все проверки пройдены — удаляем
+	// Прав нет — дальше не идём
+	if (!hasAccess) {
+		return { error: 'Access is denied', res: null };
+	}
+
 	try {
 		await deleteUser(id);
 

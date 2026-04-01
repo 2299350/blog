@@ -5,6 +5,7 @@ import { useServerRequest, useCheckAccess } from '../../hooks';
 import { selectPost } from '../../selectors';
 import { PostContent, PostForm } from './components';
 import { Comments } from './components';
+import { ErrorBlock } from '../../components';
 import {
 	loadPostAsync,
 	loadCommentsAsync,
@@ -19,6 +20,7 @@ import styled from 'styled-components';
 
 const PostContainer = ({ className }) => {
 	const [isLoading, setIsLoading] = useState(true);
+	const [postError, setPostError] = useState(null);
 	const dispatch = useDispatch();
 	const { id } = useParams();
 	const isCreating = useMatch('/post');
@@ -32,6 +34,7 @@ const PostContainer = ({ className }) => {
 
 	useLayoutEffect(() => {
 		dispatch(resetPostData()); // Сбрасываем данные при заходе (чтобы не мелькал старый пост)
+		setPostError(null);
 
 		// Если мы создаем пост — загружать ничего не надо
 		if (isCreating) {
@@ -41,11 +44,16 @@ const PostContainer = ({ className }) => {
 
 		// Если есть ID — грузим пост
 		setIsLoading(true);
-		dispatch(loadPostAsync(requestServer, id)).then(() => {
+		dispatch(loadPostAsync(requestServer, id)).then((result) => {
+			if (result?.error) {
+				setPostError(result.error);
+				setIsLoading(false);
+				return;
+			}
+
+			dispatch(loadCommentsAsync(requestServer, id));
 			setIsLoading(false);
 		});
-
-		dispatch(loadCommentsAsync(requestServer, id));
 	}, [requestServer, id, isCreating, dispatch]);
 
 	const handlePostSave = async (postData) => {
@@ -77,21 +85,20 @@ const PostContainer = ({ className }) => {
 		return <div className={className}>Загрузка...</div>;
 	}
 
-	// Если мы НЕ создаем статью, и пост не найден — ошибка 404
-	if (!isCreating && !post.id) {
-		return (
-			<div className={className}>
-				<div className="error">Такая страница не найдена</div>
-			</div>
-		);
+	// Если пост не найден — ошибка 404
+	if (postError?.code === 'POST_NOT_FOUND') {
+		return <ErrorBlock error="Такая статья не найдена" />;
+	}
+
+	// Если произошла другая ошибка загрузки
+	if (postError?.code === 'REQUEST_ERROR') {
+		return <ErrorBlock error="Ошибка загрузки статьи" />;
 	}
 
 	// Если мы пытаемся создать или редактировать без прав — ошибка доступа
 	if ((isCreating || isEditing) && !hasAccess) {
 		return (
-			<div className={className}>
-				<div className="error">У вас нет прав на это действие</div>
-			</div>
+			<ErrorBlock error="У вас нет прав для создания или редактирования статей" />
 		);
 	}
 
@@ -120,11 +127,4 @@ export const Post = styled(PostContainer)`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
-	.error {
-		margin-top: 16px;
-		text-align: center;
-		color: #d9534f;
-		font-weight: 500;
-	}
 `;
