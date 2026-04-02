@@ -17,7 +17,7 @@ export const ProtectedRoute = ({ permission, children }) => {
 
 ProtectedRoute.propTypes = {
 	permission: PropTypes.shape({
-		access: PropTypes.array.isRequired,
+		access: PropTypes.arrayOf(PropTypes.number).isRequired,
 		ownerAllowed: PropTypes.bool,
 		excludeSelf: PropTypes.bool,
 	}).isRequired,

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { H2, Icon } from '../../../../components';
 import { useCheckAccess } from '../../../../hooks';
 import { PERMISSION } from '../../../../constants';
@@ -60,6 +61,16 @@ const PostContentContainer = ({
 			<div className="text-content" dangerouslySetInnerHTML={{ __html: content }} />
 		</div>
 	);
+};
+
+PostContentContainer.propTypes = {
+	className: PropTypes.string,
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	title: PropTypes.string,
+	image_url: PropTypes.string,
+	content: PropTypes.string,
+	published_at: PropTypes.string,
+	onPostDelete: PropTypes.func.isRequired,
 };
 
 export const PostContent = styled(PostContentContainer)`

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../actions';
@@ -98,7 +99,7 @@ const AuthorizationContainer = ({ className }) => {
 						onChange: () => setServerError(null),
 					})}
 				/>
-				<Button type="submit" disabled={formError}>
+				<Button type="submit" disabled={Boolean(formError)}>
 					Авторизоваться
 				</Button>
 				{errorMessage && <AuthFormError>{errorMessage}</AuthFormError>}
@@ -106,6 +107,10 @@ const AuthorizationContainer = ({ className }) => {
 			</form>
 		</div>
 	);
+};
+
+AuthorizationContainer.propTypes = {
+	className: PropTypes.string,
 };
 
 export const Authorization = styled(AuthorizationContainer)`

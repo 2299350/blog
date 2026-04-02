@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUserId } from '../../../../selectors';
+import { useDispatch } from 'react-redux';
 import { Icon } from '../../../../components';
 import { Comment } from './components/comment/comment';
-import { useServerRequest } from '../../../../hooks';
+import { useCheckAccess, useServerRequest } from '../../../../hooks';
+import { PERMISSION } from '../../../../constants';
 import {
 	addCommentAsync,
 	removeCommentAsync,
@@ -14,11 +15,12 @@ import styled from 'styled-components';
 
 const CommentsContainer = ({ className, comments, postId }) => {
 	const [newComment, setNewComment] = useState('');
-	const userId = useSelector(selectUserId);
 	const dispatch = useDispatch();
 	const requestServer = useServerRequest();
 
-	const isDisabled = !userId || !(newComment ?? '').trim();
+	// Право на создание коммента проверяем через общий конфиг прав
+	const canAddComment = useCheckAccess(PERMISSION.CREATE_COMMENT);
+	const isDisabled = !(newComment ?? '').trim();
 
 	const onNewCommentAdd = (content) => {
 		dispatch(addCommentAsync(requestServer, postId, content));
@@ -30,9 +32,7 @@ const CommentsContainer = ({ className, comments, postId }) => {
 			openModal({
 				text: 'Удалить комментарий?',
 				onConfirm: () => {
-					// 1. Выполняем действие удаления
 					dispatch(removeCommentAsync(requestServer, commentId));
-					// 2. Закрываем модалку
 					dispatch(closeModal());
 				},
 				onCancel: () => dispatch(closeModal()),
@@ -42,25 +42,27 @@ const CommentsContainer = ({ className, comments, postId }) => {
 
 	return (
 		<div className={className}>
-			<div className="new-comment">
-				<textarea
-					name="new-comment"
-					placeholder="Введите ваш комментарий..."
-					rows={5}
-					value={newComment}
-					onChange={(e) => setNewComment(e.target.value)}
-				/>
-				<Icon
-					id="fa-paper-plane-o"
-					size="21px"
-					disabled={isDisabled}
-					className={isDisabled ? 'icon-disabled' : ''}
-					onClick={() => {
-						if (isDisabled) return;
-						onNewCommentAdd(newComment);
-					}}
-				/>
-			</div>
+			{canAddComment && (
+				<div className="new-comment">
+					<textarea
+						name="new-comment"
+						placeholder="Введите ваш комментарий..."
+						rows={5}
+						value={newComment}
+						onChange={(e) => setNewComment(e.target.value)}
+					/>
+					<Icon
+						id="fa-paper-plane-o"
+						size="21px"
+						disabled={isDisabled}
+						className={isDisabled ? 'icon-disabled' : ''}
+						onClick={() => {
+							if (isDisabled) return;
+							onNewCommentAdd(newComment);
+						}}
+					/>
+				</div>
+			)}
 
 			<div className="comments">
 				{comments.map((comment) => (
@@ -77,6 +79,20 @@ const CommentsContainer = ({ className, comments, postId }) => {
 			</div>
 		</div>
 	);
+};
+
+CommentsContainer.propTypes = {
+	className: PropTypes.string,
+	comments: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+			author: PropTypes.string,
+			author_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+			content: PropTypes.string.isRequired,
+			published_at: PropTypes.string.isRequired,
+		}),
+	).isRequired,
+	postId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export const Comments = styled(CommentsContainer)`

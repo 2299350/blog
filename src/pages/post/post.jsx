@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useLayoutEffect, useState } from 'react';
 import { useParams, useMatch, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -119,6 +120,10 @@ const PostContainer = ({ className }) => {
 			)}
 		</div>
 	);
+};
+
+PostContainer.propTypes = {
+	className: PropTypes.string,
 };
 
 export const Post = styled(PostContainer)`

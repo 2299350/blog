@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useServerRequest } from '../../hooks';
 import { OPERATIONS } from '../../constants';
@@ -73,6 +74,10 @@ const MainContainer = ({ className }) => {
 			/>
 		</div>
 	);
+};
+
+MainContainer.propTypes = {
+	className: PropTypes.string,
 };
 
 export const Main = styled(MainContainer)`

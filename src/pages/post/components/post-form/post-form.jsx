@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { Icon, Input } from '../../../../components';
 import { sanitizeContent } from './utils';
@@ -111,6 +112,17 @@ const PostFormContainer = ({
 			</div>
 		</div>
 	);
+};
+
+PostFormContainer.propTypes = {
+	className: PropTypes.string,
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	title: PropTypes.string,
+	image_url: PropTypes.string,
+	content: PropTypes.string,
+	published_at: PropTypes.string,
+	onSave: PropTypes.func.isRequired,
+	onPostDelete: PropTypes.func.isRequired,
 };
 
 export const PostForm = styled(PostFormContainer)`

@@ -17,6 +17,7 @@ const SearchContainer = ({ className, searchValue, onChange }) => {
 };
 
 SearchContainer.propTypes = {
+	className: PropTypes.string,
 	searchValue: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
 };
