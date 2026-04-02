@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { H2, UserRow, TableRow, Content } from '../../components';
@@ -115,6 +116,10 @@ const UsersContainer = ({ className }) => {
 			</div>
 		</Content>
 	);
+};
+
+UsersContainer.propTypes = {
+	className: PropTypes.string,
 };
 
 export const Users = styled(UsersContainer)`

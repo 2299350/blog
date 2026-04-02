@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Icon } from '../../../../../../components/';
 import { useCheckAccess } from '../../../../../../hooks';
 import { PERMISSION } from '../../../../../../constants';
@@ -48,6 +49,16 @@ const CommentContainer = ({
 			/>
 		</div>
 	);
+};
+
+CommentContainer.propTypes = {
+	className: PropTypes.string,
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+	author: PropTypes.string,
+	content: PropTypes.string.isRequired,
+	publishedAt: PropTypes.string.isRequired,
+	authorId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	onDelete: PropTypes.func.isRequired,
 };
 
 export const Comment = styled(CommentContainer)`

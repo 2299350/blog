@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Logo, ControlPanel } from './components';
 
@@ -11,19 +12,25 @@ const DescriptionContainer = ({ className }) => (
 	</div>
 );
 
+DescriptionContainer.propTypes = {
+	className: PropTypes.string,
+};
+
 const Description = styled(DescriptionContainer)`
 	font-style: italic;
 `;
 
 const HeaderContainer = ({ className }) => (
-	<>
-		<header className={className}>
-			<Logo />
-			<Description />
-			<ControlPanel />
-		</header>
-	</>
+	<header className={className}>
+		<Logo />
+		<Description />
+		<ControlPanel />
+	</header>
 );
+
+HeaderContainer.propTypes = {
+	className: PropTypes.string,
+};
 
 export const Header = styled(HeaderContainer)`
 	position: fixed;

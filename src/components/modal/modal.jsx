@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {
 	selectModalIsOpen,
@@ -30,6 +31,10 @@ const ModalContainer = ({ className }) => {
 			</div>
 		</div>
 	);
+};
+
+ModalContainer.propTypes = {
+	className: PropTypes.string,
 };
 
 export const Modal = styled(ModalContainer)`

@@ -1,7 +1,13 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const ErrorBlockContainer = ({ className, error }) => {
 	return <div className={className}>{error}</div>;
+};
+
+ErrorBlockContainer.propTypes = {
+	className: PropTypes.string,
+	error: PropTypes.node,
 };
 
 export const ErrorBlock = styled(ErrorBlockContainer)`

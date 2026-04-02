@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { getWeather } from '../../api/weather';
 import { getFormattedDate } from '../../utils';
@@ -38,6 +39,10 @@ const FooterContainer = ({ className }) => {
 			</div>
 		</div>
 	);
+};
+
+FooterContainer.propTypes = {
+	className: PropTypes.string,
 };
 
 export const Footer = styled(FooterContainer)`

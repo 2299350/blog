@@ -6,7 +6,7 @@ import {
 	postReducer,
 	postsReducer,
 	appReducer,
-} from './redusers';
+} from './reducers';
 
 const reducer = combineReducers({
 	user: userReducer,

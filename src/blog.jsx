@@ -1,8 +1,16 @@
 import { useLayoutEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
-import { Header, Footer, ErrorBlock, Modal, ProtectedRoute } from './components';
-import { Authorization, Registration, Users, Post, Main, AccessDenied } from './pages';
+import { Header, Footer, Modal, ProtectedRoute } from './components';
+import {
+	Authorization,
+	Registration,
+	Users,
+	Post,
+	Main,
+	AccessDenied,
+	NotFound,
+} from './pages';
 import { setUser } from './actions';
 import { PERMISSION } from './constants';
 import { getUserSession } from './utils';
@@ -88,12 +96,7 @@ function Blog() {
 						}
 					/>
 
-					<Route
-						path="*"
-						element={
-							<ErrorBlock error="404. Страницы с таким адресом не существует" />
-						}
-					/>
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</Page>
 

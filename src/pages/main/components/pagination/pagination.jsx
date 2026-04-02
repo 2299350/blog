@@ -50,6 +50,7 @@ const PaginationContainer = ({ className, currentPage, pageCount, onPageChange }
 };
 
 PaginationContainer.propTypes = {
+	className: PropTypes.string,
 	currentPage: PropTypes.number.isRequired,
 	pageCount: PropTypes.number.isRequired,
 	onPageChange: PropTypes.func.isRequired,

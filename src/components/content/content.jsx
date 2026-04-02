@@ -1,8 +1,9 @@
 import { H2 } from '../../components/h2/h2';
 import { ErrorBlock } from '../error-block/error-block';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const ContantContainer = ({ className, children, isLoading = false, error }) => {
+const ContentContainer = ({ className, children, isLoading = false, error }) => {
 	if (isLoading) {
 		return (
 			<div className={className}>
@@ -24,7 +25,14 @@ const ContantContainer = ({ className, children, isLoading = false, error }) => 
 	return <div className={className}>{children}</div>;
 };
 
-export const Content = styled(ContantContainer)`
+ContentContainer.propTypes = {
+	className: PropTypes.string,
+	children: PropTypes.node,
+	isLoading: PropTypes.bool,
+	error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string, PropTypes.node]),
+};
+
+export const Content = styled(ContentContainer)`
 	width: 100%;
 
 	.info {

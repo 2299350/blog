@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { Icon } from '../../../../components';
 import { TableRow } from '../table-row/table-row';
@@ -84,6 +85,22 @@ const UserRowContainer = ({
 			</TableRow>
 		</div>
 	);
+};
+
+UserRowContainer.propTypes = {
+	className: PropTypes.string,
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+	login: PropTypes.string.isRequired,
+	registered_at: PropTypes.string.isRequired,
+	role_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+	roles: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+			name: PropTypes.string.isRequired,
+		}),
+	).isRequired,
+	onRoleSave: PropTypes.func.isRequired,
+	onUserDelete: PropTypes.func.isRequired,
 };
 
 export const UserRow = styled(UserRowContainer)`

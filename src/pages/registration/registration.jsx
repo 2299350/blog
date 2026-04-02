@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../actions';
@@ -111,6 +112,10 @@ const RegistrationContainer = ({ className }) => {
 			</form>
 		</div>
 	);
+};
+
+RegistrationContainer.propTypes = {
+	className: PropTypes.string,
 };
 
 export const Registration = styled(RegistrationContainer)`
